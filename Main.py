@@ -810,4 +810,4 @@ async def on_command_error(ctx, error):
     await channel.send(f"``{error_message}``")
 
         
-bot.run('yB9q5Wb469NLk4qA5fY0YgK6t2mLAzmJ')
+bot.run('your token ')
