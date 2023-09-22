@@ -1,6 +1,6 @@
 # DiscordGloom 🌑
 
-![DiscordGloom Logo](https://github.com/haydenbanz/DiscordGloom/assets/logo.png)
+![DiscordGloom Logo](https://repository-images.githubusercontent.com/694818699/66252912-6090-4f30-a56e-9b98ee421853)
 
 [![Python - DiscordGloom](https://img.shields.io/static/v1?label=Python&message=Your%20Python%20Project%20Name&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge&&logo=python)](https://github.com/haydenbanz/6/tree/main)
 [![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/blob/main/LICENSE)
@@ -9,6 +9,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/pulls)
 [![GitHub Stars](https://img.shields.io/github/stars/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/stargazers)
+![Profile Views](https://komarev.com/ghpvc/?username=haydenbanz&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)
 
 ## 📖 Description
 
