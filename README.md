@@ -101,7 +101,7 @@ This project is maintained by:
 
 If you find this project helpful, consider buying us a coffee:
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%23FFDD00?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/ciph3r#pageMessageModal)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%23FFDD00?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/codeglitch)
 
 ## 🚫 Disclaimer
 
