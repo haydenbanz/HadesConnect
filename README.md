@@ -103,7 +103,7 @@ Contributions to this project are welcome. If you find any issues or have sugges
 
 ## 🌐 Support
 
-[![Discord](https://img.shields.io/badge/Discord-CODE%20GLITCH%20Bot%20DISCORD%20SERVER%20NAME-%237289DA?style=for-the-badge&logo=discord)](https://discord.gg/hjExjPUfye)
+[![Discord](https://img.shields.io/badge/Discord-CODE%20GLITCH%20Bot%20DISCORD%20SERVER%20NAME-%237289DA?style=for-the-badge&logo=discord)](https://discord.gg/ZFTCpAU53U)
 
 Join our Discord server (Update Soon) for support, discussions, and updates related to DiscordGloom.
 
