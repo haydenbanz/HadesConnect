@@ -7,7 +7,7 @@ intents.typing = False  # You can adjust these based on your bot's needs
 intents.presences = False
 
 # Replace 'YOUR_TOKEN_HERE' with your actual bot token
-TOKEN = 'MTE1NDIyNDczOTM0MzE1MTE2NA.G_gP7S.dQ2blWMjP5yygYUkOIjfh8rDexiU7pNMWnVLUg'
+TOKEN = ''
 
 # Create a bot instance with intents and a prefix for commands
 bot = commands.Bot(command_prefix='!', intents=intents)
