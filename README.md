@@ -59,20 +59,21 @@ To use DiscordGloom, follow these steps:
 2. Navigate to the DiscordGloom directory: `cd DiscordGloom`
 3. Install the required Python packages by running: `pip install -r requirements.txt`
 4. modify  ` main.py ` file [add your discord bot token]
-5. Start DiscordGloom by running: `python main.py`
+5. Start DiscordGloom by running: `python bot.py`
 6. Check your Discord server where you added the bot for remote access.
 
 ## Compline to exe
 1. Run given command in terminal  `pip install pyinstaller `
 2. Run given command in terminal  ` pip install pywin32 `
-3. Open your terminal in file dir and paste command  ` pyinstaller --onefile --add-data "*.py;." main.py ` OR `pyinstaller --onefile --exclude-module pythoncom main.py`
+3. Open your terminal in file dir and paste command  ` pyinstaller --onefile --add-data "*.py;." bot.py ` OR `pyinstaller --onefile --exclude-module pythoncom bot.py`
 
 
 
 ## 🔧 Configuration
 
--  Configure the bot by editing the `Main.py` file.
--  Replace with your discord token.
+-  Configure the bot by editing the `bot.py` file.
+-   Replace with your discord token by changing text_channel_id =   # Replace with your desired text channel ID.
+-  Replace with your discord token bot.run('YOUR_TOKEN').
 
 ## Commands 
 
