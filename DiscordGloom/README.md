@@ -44,7 +44,7 @@ DiscordGloom is a Discord Access Trojan (DAT) 🕵️‍♂️, a Remote Access 
 To use DiscordGloom, follow these steps:
 
 1. Clone or download the repository  `git clonehttps://github.com/haydenbanz/DiscordGloom.git` or [DiscordGloom download](https://github.com/haydenbanz/DiscordGloom/archive/refs/heads/main.zip)).
-2. Navigate to the DiscordGloom directory: `cd DiscordGloom`
+2. Navigate to the DiscordGloom directory: `cd DiscordGloom` and again `cd DiscordGloom`
 3. Install the required Python packages by running: `pip install -r requirements.txt`
 4. modify  ` main.py ` file [add your discord bot token]
 5. Start DiscordGloom by running: `python main.py`
