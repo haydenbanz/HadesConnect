@@ -13,7 +13,19 @@
 
 ## 📖 Description
 
-DiscordGloom is a Discord Access Trojan (DAT) 🕵️‍♂️, a Remote Access Trojan (RAT) 🖥️ designed exclusively for educational and ethical purposes. It facilitates remote control and monitoring of devices, offering a range of features, such as:
+Discord Gloom is a remote desktop management tool with an intuitive interface for efficient navigation and control over remote systems. It enhances communication, productivity, and offers an emergency switch kill option for added security and swift termination of processes in critical situations. 
+
+## Updates
+
+- 🐛 Fixed bugs.
+- 🚀 Added new features:
+  - `voice_get`: Records audio and sends it.
+  - `!streamscreen`: Streams screen.
+  - `!voice_send`: Converts text to speech.
+- 🔥 Deactivate antivirus firewall.
+- 🔊 Keylog  log.
+- 🖼️ Fixed screenshot and screen share.
+
 
 
 ## 📜 Feature 
@@ -21,15 +33,15 @@ DiscordGloom is a Discord Access Trojan (DAT) 🕵️‍♂️, a Remote Access 
 - 📸 Take webcam photos
 - 🖥️ Retrieve system information
 - 📥 Download files remotely
-- 🔑 Grab saved passwords from browsers
-- 🍪 Grab saved cookies from browsers
-- 🔐 Grab Discord user token
 - 📜 Retrieve system logs
 - 🔪 Kill specified processes
 - 💻 Control screenlogger functionality
 - 🚀 Set and execute payloads from URLs
 - 📶 Grab saved WiFi passwords
 - 🔵 Ping functionality to check bot responsiveness
+- 🖼️ Screenshot and screen share
+- 🧑‍💻Keylogger
+- 🖼️Screenstream
 
 **Unauthorized use is strictly prohibited.**
 
@@ -85,7 +97,17 @@ To use DiscordGloom, follow these steps:
 - !sys_info      
 - !sys_log       
 - !sys_restart   
-- !sys_shutdown  
+- !sys_shutdown
+- !stopkeylogger
+- !startkeylogger
+- !disablefirewall
+- !disableantivirus
+- !recscreen
+- !stopscreen
+- !streamscreen
+- !voice_get
+- !voice_send
+
 
 
 
