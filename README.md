@@ -1,4 +1,4 @@
-# DiscordGloom 🌑
+# DiscordGloom 🌑 V 2.1
 
 ![DiscordGloom Logo](https://repository-images.githubusercontent.com/694818699/66252912-6090-4f30-a56e-9b98ee421853)
 
