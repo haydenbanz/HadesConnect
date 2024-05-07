@@ -1,6 +1,6 @@
 # DiscordGloom 🌑 V 2.1
 
-![DiscordGloom Logo](https://repository-images.githubusercontent.com/694818699/66252912-6090-4f30-a56e-9b98ee421853)
+![DiscordGloom Logo](https://github.com/haydenbanz/DiscordGloom/blob/main/banner.png?raw=true)
 
 [![Python - DiscordGloom](https://img.shields.io/static/v1?label=Python&message=Discordgloom&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge&&logo=python)](https://github.com/haydenbanz/6/tree/main)
 [![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/blob/main/LICENSE)
