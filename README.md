@@ -1,4 +1,4 @@
-# DiscordGloom 🌑 V 2.1
+# PanicPortal 🌑 V 2.1
 
 ![DiscordGloom Logo](https://github.com/haydenbanz/DiscordGloom/blob/main/banner.png?raw=true)
 
@@ -11,39 +11,87 @@
 [![GitHub Stars](https://img.shields.io/github/stars/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/stargazers)
 ![Profile Views](https://komarev.com/ghpvc/?username=haydenbanz&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)
 
-## 📖 Description
 
-Discord Gloom is a remote desktop management tool with an intuitive interface for efficient navigation and control over remote systems. It enhances communication, productivity, and offers an emergency switch kill option for added security and swift termination of processes in critical situations. 
+# Panic Portal: Emergency Switch & Remote Desktop Control via Discord
+
+## 📖 Description
+Panic Portal is a software solution designed to enable emergency switch activation and remote desktop control through Discord. It integrates seamlessly with Discord's platform, allowing users to manage emergency procedures and access remote desktops directly from their Discord server. Ideal for swift response teams and remote support scenarios, Panic Portal ensures efficient communication and action during critical situations.
+
+
+## Key Features
+
+- **Emergency Switch Activation:** Trigger emergency procedures instantly via Discord commands.
+- **Remote Desktop Control:** Access and control remote desktops securely through Discord.
+- **Real-time Communication:** Facilitate swift response and coordination with team members.
+- **Customizable Settings:** Configure permissions and settings to suit specific operational needs.
+
 
 ## Updates
 
-- 🐛 Fixed bugs.
+- 🐛 Fixed bugs:
+  - Fixed issue with Spotify remote device control not starting on device boot.
 - 🚀 Added new features:
-  - `voice_get`: Records audio and sends it.
-  - `!streamscreen`: Streams screen.
-  - `!voice_send`: Converts text to speech.
-- 🔥 Deactivate antivirus firewall.
-- 🔊 Keylog  log.
-- 🖼️ Fixed screenshot and screen share.
+  - 🔥 Deactivate antivirus firewall.
+  - 🖼️ Fixed screenshot and screen share.
+  - 🎵 Spotify remote device control: Start, stop, and control Spotify playback remotely.
+  - 🌐 Web and webhook-based control: Start a web server and utilize WebSocket (ws://) for real-time interactions.
+  - 🔋 Get battery status: Monitor and display device battery status.
+  - 🚨 Self-destruction of application: Implement a feature to self-destruct the application securely.
+  - 📜 Clear logs: Provide functionality to clear application logs securely.
 
 
 
-## 📜 Feature 
-- 📷 Capture screenshots
-- 📸 Take webcam photos
-- 🖥️ Retrieve system information
-- 📥 Download files remotely
-- 📜 Retrieve system logs
-- 🔪 Kill specified processes
-- 💻 Control screenlogger functionality
-- 🚀 Set and execute payloads from URLs
-- 📶 Grab saved WiFi passwords
-- 🔵 Ping functionality to check bot responsiveness
-- 🖼️ Screenshot and screen share
-- 🧑‍💻Keylogger
-- 🖼️Screenstream
 
-**Unauthorized use is strictly prohibited.**
+## Feature List
+
+- 🖥️ **/!streamscreen:** Sends the screenshot and sends.
+- 💻 **/powershell:** Executes commands using PowerShell.
+- 🤖 **/bot_commmand:** Executes a command related to a bot.
+- 📝 **/sys_log:** Logs system activities.
+- 🔒 **/lock_sys:** Locks the system.
+- 📦 **/set_payload:** Sets a payload for execution.
+- 📶 **/grab_wifi:** Grabs WiFi information.
+- ⬇️ **/download:** Downloads a specified file.
+- 🎥 **/cam_list:** Lists connected cameras.
+- 🔄 **/list_process:** Lists running processes.
+- ⛔ **/kill_process:** Terminates a specified process.
+- 📡 **/rat_down:** Initiates a remote access tool download.
+- 🔄 **/sys_restart:** Restarts the system.
+- 🗑️ **/clear:** Clears the current operation.
+- 🎤 **/voice_rec [duration]:** Initiates voice recognition. (Duration must be a positive integer.)
+- 🖥️ **/recscreen [duration]:** Records the screen. (Invalid duration. Please specify a valid number after '!recscreen')
+- 🛡️ **/disableantivirus:** Disables antivirus protection.
+- 🛡️ **/disablefirewall:** Disables firewall protection.
+- 🌐 **/start_server:** Starts a server.
+- 🌐 **/websocket_server:** Starts a WebSocket server.
+- 🎵 **/now_playing:** Gets the current song playing in Spotify.
+- ▶️ **/play [song]:** Plays a song in Spotify. (Example: /play faded)
+- ⏸️ **/pause:** Pauses the current song in Spotify.
+- ▶️ **/resume:** Resumes playback of the current song in Spotify.
+- ⏭️ **/next:** Plays the next song in the Spotify playlist.
+- ⏮️ **/previous:** Plays the previous song in the Spotify playlist.
+- ❤️ **/like:** Likes the current song in Spotify.
+- 🔋 **/battery:** Retrieves battery status.
+- 🗑️ **/cleartracks:** Clears tracks and logs.
+- 💣 **/self_destruct:** Initiates self-destruction.
+- 📶 **/ping:** Sends a ping to check status.
+- ℹ️ **/sys_info:** Retrieves system information.
+- 🖥️ **/screen_share:** Shares the screen.
+- 📝 **/start_logging:** Starts logging activities.
+- 📸 **/camic [cam_id]:** Takes a shot with the default webcam or the specified webcam ID.
+
+
+## ⚠️ Unauthorized Use Alert ⚠️
+
+Unauthorized use of this software is strictly prohibited. This includes but is not limited to:
+
+- Unauthorized access or control of systems.
+- Use of commands without proper authorization.
+- Any activity not explicitly permitted by the software's intended use.
+
+Violations will be subject to legal action and may result in severe penalties.
+
+Please ensure all usage complies with applicable laws and regulations.
 
 ## 🛠️ Prerequisites
 
@@ -51,21 +99,112 @@ Discord Gloom is a remote desktop management tool with an intuitive interface fo
 - [![Discord.py library](https://img.shields.io/static/v1?label=Discord.py&message=Library&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://pypi.org/project/discord.py/)
 - Other required Python packages listed in `requirements.txt`
 
-## 🚀 Usage
 
-To use DiscordGloom, follow these steps:
 
-1. Clone or download the repository  `git clonehttps://github.com/haydenbanz/DiscordGloom.git` or [DiscordGloom download](https://github.com/haydenbanz/DiscordGloom/archive/refs/heads/main.zip)).
-2. Navigate to the DiscordGloom directory: `cd DiscordGloom`
-3. Install the required Python packages by running: `pip install -r requirements.txt`
-4. modify  ` main.py ` file [add your discord bot token]
-5. Start DiscordGloom by running: `python bot.py`
-6. Check your Discord server where you added the bot for remote access.
+## Getting Discord Token and Spotify Client Secret
 
-## Compline to exe
-1. Run given command in terminal  `pip install pyinstaller `
-2. Run given command in terminal  ` pip install pywin32 `
-3. Open your terminal in file dir and paste command  ` pyinstaller --onefile --add-data "*.py;." bot.py ` OR `pyinstaller --onefile --exclude-module pythoncom bot.py`
+### Discord Token
+
+1. **Create a Discord Application**:
+   - Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+   - Click on **New Application** and give your application a name.
+   - Navigate to the **Bot** tab on the left sidebar.
+   - Click **Add Bot** and confirm.
+   - Under the **Token** section, click **Copy** to get your bot token.
+
+2. **Keep Your Token Secure**:
+   - Treat your token like a password. Do not share it publicly or commit it to version control.
+
+### Spotify Client Secret
+
+1. **Create a Spotify Application**:
+   - Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
+   - Log in or sign up for a Spotify Developer account.
+   - Click on **Create an App** and fill out the necessary details for your application.
+
+2. **Retrieve Client ID and Client Secret**:
+   - Once your application is created, you'll see your **Client ID** displayed.
+   - Click on **Show Client Secret** to reveal and copy your **Client Secret**.
+
+3. **Keep Your Client Secret Secure**:
+   - Treat your Client Secret like a password. Do not share it publicly or commit it to version control.
+
+4. **Use Tokens and Secrets in Your Application**:
+   - Store your Discord Token and Spotify Client Secret securely in environment variables or a configuration file (e.g., `.env` file) not included in your code repository.
+
+5. **References**:
+   - [Discord Developer Portal](https://discord.com/developers/applications)
+   - [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications)
+
+
+
+## Installation Instructions
+
+1. **Clone or Download the Repository**:
+   - Clone the repository using Git:
+     ```bash
+     git clone https://github.com/haydenbanz/PanicPortal.git
+     ```
+   - Alternatively, download the repository from [PanicPortal download](https://github.com/haydenbanz/PanicPortaL/archive/refs/heads/main.zip).
+
+2. **Navigate to the Directory**:
+   - Open a terminal or command prompt.
+   - Change directory to PanicPortal:
+     ```bash
+     cd PanicPortal
+     ```
+
+3. **Install Required Python Packages**:
+   - Install the necessary packages using pip:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+4. **Modify `bot.py` Configuration**:
+   - Open `bot.py` file in a text editor.
+   - Add your Discord bot token, Spotify client ID, Spotify client secret:
+     - Discord bot token: Update on line 1182.
+     - Spotify client ID and client secret: Update on lines 74 & 75.
+     - Channel ID for voice (if applicable): Update on line 520.
+
+5. **Start PanicPortal**:
+   - Launch PanicPortal by running:
+     ```bash
+     python bot.py
+     ```
+
+6. **Check Discord Server**:
+   - Verify that the bot appears and functions correctly on your Discord server for remote access.
+
+## Compile to Executable (Optional)
+
+1. **Install PyInstaller**:
+   - Install PyInstaller using pip:
+     ```bash
+     pip install pyinstaller
+     ```
+
+2. **Install PyWin32 (if not installed)**:
+   - Install PyWin32 using pip:
+     ```bash
+     pip install pywin32
+     ```
+
+3. **Compile to Executable**:
+   - Navigate to your project directory in the terminal or command prompt.
+   - Run one of the following commands:
+     - For Windows:
+       ```bash
+       pyinstaller --onefile --add-data "*.py;." bot.py
+       ```
+       or
+       ```bash
+       pyinstaller --onefile --exclude-module pythoncom bot.py
+       ```
+   - This will create a standalone executable file in the `dist` directory.
+
+
+
 
 
 
@@ -75,54 +214,92 @@ To use DiscordGloom, follow these steps:
 -   Replace with your discord token by changing text_channel_id =   # Replace with your desired text channel ID.
 -  Replace with your discord token bot.run('YOUR_TOKEN').
 
-## Commands 
+## Commands
 
-- !bot_help      
-- !cam_list      
-- !camic         
-- !clear         
-- !download      
-- !grab_cookies  
-- !grab_distoken 
-- !grab_password 
-- !grab_wifi     
-- !help          Shows this message
-- !kill_process  
-- !list_process  
-- !ping          
-- !powershell    
-- !rat_down      
-- !screenlogger  
-- !screenshot    
-- !set_payload   
-- !sys_info      
-- !sys_log       
-- !sys_restart   
-- !sys_shutdown
-- !stopkeylogger
-- !startkeylogger
-- !disablefirewall
-- !disableantivirus
-- !recscreen
-- !stopscreen
-- !streamscreen
-- !voice_get
-- !voice_send
+- **/!streamscreen:** Sends the screenshot and sends.
+- **/powershell:** Executes commands using PowerShell.
+- **/bot_commmand:** Executes a command related to a bot.
+- **/sys_log:** Logs system activities.
+- **/lock_sys:** Locks the system.
+- **/set_payload:** Sets a payload for execution.
+- **/grab_wifi:** Grabs WiFi information.
+- **/download:** Downloads a specified file.
+- **/cam_list:** Lists connected cameras.
+- **/list_process:** Lists running processes.
+- **/kill_process:** Terminates a specified process.
+- **/rat_down:** Initiates a remote access tool download.
+- **/sys_restart:** Restarts the system.
+- **/clear:** Clears the current operation.
+- **/voice_rec [duration]:** Initiates voice recognition. (Duration must be a positive integer.)
+- **/recscreen [duration]:** Records the screen. (Invalid duration. Please specify a valid number after '!recscreen')
+- **/disableantivirus:** Disables antivirus protection.
+- **/disablefirewall:** Disables firewall protection.
+- **/start_server:** Starts a server.
+- **/websocket_server:** Starts a WebSocket server.
+- **/now_playing:** Gets the current song playing in Spotify.
+- **/play [song]:** Plays a song in Spotify. (Example: /play faded)
+- **/pause:** Pauses the current song in Spotify.
+- **/resume:** Resumes playback of the current song in Spotify.
+- **/next:** Plays the next song in the Spotify playlist.
+- **/previous:** Plays the previous song in the Spotify playlist.
+- **/like:** Likes the current song in Spotify.
+- **/battery:** Retrieves battery status.
+- **/cleartracks:** Clears tracks and logs.
+- **/self_destruct:** Initiates self-destruction.
+- **/ping:** Sends a ping to check status.
+- **/sys_info:** Retrieves system information.
+- **/screen_share:** Shares the screen.
+- **/start_logging:** Starts logging activities.
+- **/camic [cam_id]:** Takes a shot with the default webcam or the specified webcam ID.
 
 
 
 
-## 🤝 Contribution
 
-[![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/DiscordGloom?style=for-the-badge)](https://github.com/haydenbanz/DiscordGloom/pulls)
-1. Fork the repository on GitHub.
-2. Clone your forked repository to your local machine.
-3. Create a new branch for your changes.
-4. Make your changes and commit them.
-5. Push your changes to your fork.
-6. Create a pull request on GitHub.
-Contributions to this project are welcome. If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+## Contribution
+
+We welcome contributions to PanicPortal! If you have suggestions for improvements, found a bug, or have a new feature request, feel free to contribute.
+
+- [![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/issues)
+- [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/pulls)
+
+### How to Contribute
+
+1. **Fork the Repository**: Click the "Fork" button at the top right of the repository page to create your own copy of the repository.
+
+2. **Clone Your Fork**: Clone your forked repository to your local machine using the following command:
+    ```bash
+    git clone https://github.com/your-username/PanicPortal.git
+    ```
+
+3. **Create a New Branch**: Create a new branch for your feature or bugfix:
+    ```bash
+    git checkout -b feature-or-bugfix-name
+    ```
+
+4. **Make Changes**: Make your changes or add your new feature.
+
+5. **Commit Your Changes**: Commit your changes with a clear and concise commit message:
+    ```bash
+    git commit -m "Description of the changes"
+    ```
+
+6. **Push to Your Fork**: Push your changes to your forked repository:
+    ```bash
+    git push origin feature-or-bugfix-name
+    ```
+
+7. **Submit a Pull Request**: Go to the original repository and submit a pull request from your forked repository. Provide a detailed description of your changes in the pull request.
+
+### Guidelines
+
+- Follow the existing code style.
+- Write clear and concise commit messages.
+- Test your changes thoroughly before submitting a pull request.
+- Ensure that your changes do not introduce new bugs or break existing functionality.
+- Be respectful and open to feedback during the code review process.
+
+Thank you for contributing to PanicPortal!
 
 ## 🌐 Support
 
@@ -130,13 +307,13 @@ Contributions to this project are welcome. If you find any issues or have sugges
 
 Join our Discord server (Update Soon) for support, discussions, and updates related to DiscordGloom.
 
+
+
 ## 📜 License
 
-![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-DiscordGloom is released under the MIT License. See the [LICENSE](https://github.com/haydenbanz/DiscordGloom/blob/main/LICENSE) file for more details.
-
-If you have any questions or feedback, please contact the project maintainers:
+**Unauthorized use is strictly prohibited.**
 
 👤 0x_hayden
 📧 Email: cubedimension@protonmail.com
