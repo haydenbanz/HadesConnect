@@ -10,7 +10,7 @@
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/pulls)
 [![GitHub Stars](https://img.shields.io/github/stars/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/stargazers)
 ![Profile Views](https://komarev.com/ghpvc/?username=haydenbanz&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)
-[![GitHub Downloads](https://img.shields.io/github/downloads/haydenbanz/PanicPortal/total?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/releases)
+[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=PanicPortal&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/releases)
 
 
 # Panic Portal: Emergency Switch & Remote Desktop Control via Discord
