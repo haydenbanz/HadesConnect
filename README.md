@@ -141,6 +141,15 @@ Please ensure all usage complies with applicable laws and regulations.
 
 ## Installation Instructions
 
+### Download EXE and Environment
+
+[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=PanicPortal&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/releases)
+
+<BR>
+
+**OR**<BR>
+
+
 1. **Clone or Download the Repository**:
    - Clone the repository using Git:
      ```bash
