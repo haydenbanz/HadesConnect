@@ -1,23 +1,22 @@
-# PanicPortal 🌑 V 2.1
+# HadesConnect 🌑 V 2.1
 
-![PanicPortal Logo](https://repository-images.githubusercontent.com/694818699/99a822c1-692d-4ba9-94df-05b6cf6931ec)
+![HadesConnect Logo](https://github.com/haydenbanz/HadesConnect/blob/main/HadesConnect.png?raw=true)
 
-[![Python - PanicPortal](https://img.shields.io/static/v1?label=Python&message=PanicPortal&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge&&logo=python)](https://github.com/haydenbanz/PanicPortal/tree/main)
-[![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/blob/main/LICENSE)
+[![Python - HadesConnect](https://img.shields.io/static/v1?label=Python&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge&&logo=python)](https://github.com/haydenbanz/HadesConnect/tree/main)
+[![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/blob/main/LICENSE)
 [![Python Version](https://img.shields.io/static/v1?label=Python&message=3.6%2B&color=%230078D6&labelColor=%23e3e3e3&style=for-the-badge&logo=python)](https://www.python.org/downloads/)
 [![Discord.py library](https://img.shields.io/static/v1?label=Discord.py&message=Library&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://pypi.org/project/discord.py/)
-[![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/pulls)
-[![GitHub Stars](https://img.shields.io/github/stars/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/HadesConnect?style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/HadesConnect?style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/pulls)
+[![GitHub Stars](https://img.shields.io/github/stars/haydenbanz/HadesConnect?style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/stargazers)
 ![Profile Views](https://komarev.com/ghpvc/?username=haydenbanz&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)
-[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=PanicPortal&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/releases)
+[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/releases)
 
-
-# Panic Portal: Emergency Switch & Remote Desktop Control via Discord
+# HadesConnect: Emergency Switch & Remote Desktop Control via Discord
 
 ## 📖 Description
-Panic Portal is a software solution designed to enable emergency switch activation and remote desktop control through Discord. It integrates seamlessly with Discord's platform, allowing users to manage emergency procedures and access remote desktops directly from their Discord server. Ideal for swift response teams and remote support scenarios, Panic Portal ensures efficient communication and action during critical situations.
 
+HadesConnect is a software solution designed to enable emergency switch activation and remote desktop control through Discord. It integrates seamlessly with Discord's platform, allowing users to manage emergency procedures and access remote desktops directly from their Discord server. Ideal for swift response teams and remote support scenarios, HadesConnect ensures efficient communication and action during critical situations.
 
 ## Key Features
 
@@ -25,7 +24,6 @@ Panic Portal is a software solution designed to enable emergency switch activati
 - **Remote Desktop Control:** Access and control remote desktops securely through Discord.
 - **Real-time Communication:** Facilitate swift response and coordination with team members.
 - **Customizable Settings:** Configure permissions and settings to suit specific operational needs.
-
 
 ## Updates
 
@@ -39,9 +37,6 @@ Panic Portal is a software solution designed to enable emergency switch activati
   - 🔋 Get battery status: Monitor and display device battery status.
   - 🚨 Self-destruction of application: Implement a feature to self-destruct the application securely.
   - 📜 Clear logs: Provide functionality to clear application logs securely.
-
-
-
 
 ## Feature List
 
@@ -81,7 +76,6 @@ Panic Portal is a software solution designed to enable emergency switch activati
 - 📝 **/start_logging:** Starts logging activities.
 - 📸 **/camic [cam_id]:** Takes a shot with the default webcam or the specified webcam ID.
 
-
 ## ⚠️ Unauthorized Use Alert ⚠️
 
 Unauthorized use of this software is strictly prohibited. This includes but is not limited to:
@@ -99,8 +93,6 @@ Please ensure all usage complies with applicable laws and regulations.
 - [![Python Version](https://img.shields.io/static/v1?label=Python&message=3.6%2B&color=%230078D6&labelColor=%23e3e3e3&style=for-the-badge&logo=python)](https://www.python.org/downloads/)
 - [![Discord.py library](https://img.shields.io/static/v1?label=Discord.py&message=Library&color=%232A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://pypi.org/project/discord.py/)
 - Other required Python packages listed in `requirements.txt`
-
-
 
 ## Getting Discord Token and Spotify Client Secret
 
@@ -137,31 +129,30 @@ Please ensure all usage complies with applicable laws and regulations.
    - [Discord Developer Portal](https://discord.com/developers/applications)
    - [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications)
 
-
+# HadesConnect
 
 ## Installation Instructions
 
 ### Download EXE and Environment
 
-[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=PanicPortal&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/releases)
+[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/releases)
 
 <BR>
 
 **OR**<BR>
 
-
 1. **Clone or Download the Repository**:
    - Clone the repository using Git:
      ```bash
-     git clone https://github.com/haydenbanz/PanicPortal.git
+     git clone https://github.com/haydenbanz/HadesConnect.git
      ```
-   - Alternatively, download the repository from [PanicPortal download](https://github.com/haydenbanz/PanicPortaL/archive/refs/heads/main.zip).
+   - Alternatively, download the repository from [HadesConnect download](https://github.com/haydenbanz/HadesConnect/archive/refs/heads/main.zip).
 
 2. **Navigate to the Directory**:
    - Open a terminal or command prompt.
-   - Change directory to PanicPortal:
+   - Change directory to HadesConnect:
      ```bash
-     cd PanicPortal
+     cd HadesConnect
      ```
 
 3. **Install Required Python Packages**:
@@ -177,8 +168,8 @@ Please ensure all usage complies with applicable laws and regulations.
      - Spotify client ID and client secret: Update on lines 74 & 75.
      - Channel ID for voice (if applicable): Update on line 520.
 
-5. **Start PanicPortal**:
-   - Launch PanicPortal by running:
+5. **Start HadesConnect**:
+   - Launch HadesConnect by running:
      ```bash
      python bot.py
      ```
@@ -213,22 +204,17 @@ Please ensure all usage complies with applicable laws and regulations.
        ```
    - This will create a standalone executable file in the `dist` directory.
 
-
-
-
-
-
 ## 🔧 Configuration
 
 -  Configure the bot by editing the `bot.py` file.
--   Replace with your discord token by changing text_channel_id =   # Replace with your desired text channel ID.
--  Replace with your discord token bot.run('YOUR_TOKEN').
+-   Replace with your Discord token by changing `text_channel_id =   # Replace with your desired text channel ID`.
+-  Replace with your Discord token `bot.run('YOUR_TOKEN')`.
 
 ## Commands
 
 - **/!streamscreen:** Sends the screenshot and sends.
 - **/powershell:** Executes commands using PowerShell.
-- **/bot_commmand:** Executes a command related to a bot.
+- **/bot_command:** Executes a command related to a bot.
 - **/sys_log:** Logs system activities.
 - **/lock_sys:** Locks the system.
 - **/set_payload:** Sets a payload for execution.
@@ -262,16 +248,12 @@ Please ensure all usage complies with applicable laws and regulations.
 - **/start_logging:** Starts logging activities.
 - **/camic [cam_id]:** Takes a shot with the default webcam or the specified webcam ID.
 
-
-
-
-
 ## Contribution
 
-We welcome contributions to PanicPortal! If you have suggestions for improvements, found a bug, or have a new feature request, feel free to contribute.
+We welcome contributions to HadesConnect! If you have suggestions for improvements, found a bug, or have a new feature request, feel free to contribute.
 
-- [![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/issues)
-- [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/PanicPortal?style=for-the-badge)](https://github.com/haydenbanz/PanicPortal/pulls)
+- [![GitHub Issues](https://img.shields.io/github/issues/haydenbanz/HadesConnect?style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/issues)
+- [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/haydenbanz/HadesConnect?style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/pulls)
 
 ### How to Contribute
 
@@ -279,7 +261,7 @@ We welcome contributions to PanicPortal! If you have suggestions for improvement
 
 2. **Clone Your Fork**: Clone your forked repository to your local machine using the following command:
     ```bash
-    git clone https://github.com/your-username/PanicPortal.git
+    git clone https://github.com/your-username/HadesConnect.git
     ```
 
 3. **Create a New Branch**: Create a new branch for your feature or bugfix:
@@ -309,7 +291,7 @@ We welcome contributions to PanicPortal! If you have suggestions for improvement
 - Ensure that your changes do not introduce new bugs or break existing functionality.
 - Be respectful and open to feedback during the code review process.
 
-Thank you for contributing to PanicPortal!
+Thank you for contributing to HadesConnect!
 
 ## 🌐 Support
 
@@ -317,17 +299,15 @@ Thank you for contributing to PanicPortal!
 
 Join our Discord server (Update Soon) for support, discussions, and updates related to DiscordGloom.
 
-
-
 ## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 **Unauthorized use is strictly prohibited.**
 
-👤 0x_hayden
-📧 Email: cubedimension@protonmail.com
-📧 Email:barneshayden278@gmail.com
+👤 0x_hayden  
+📧 Email: cubedimension@protonmail.com  
+📧 Email: barneshayden278@gmail.com
 
 ## 🙏 Credits
 
@@ -337,9 +317,9 @@ This project is maintained by:
 
 ### Contributors and Developers
 
-[<img src="https://avatars.githubusercontent.com/u/67865621?s=64&v=4" width="64" height="64" alt="haydenbanz">](https://github.com/haydenbanz)
-[<img src="https://avatars.githubusercontent.com/u/116929670?s=64&v=4" width="64" height="64" alt="AldrinCode">](https://github.com/AldrinCode)
-[<img src="https://avatars.githubusercontent.com/u/108749445?s=64&v=4" width="64" height="64" alt="0x_varadacode">](https://github.com/0x_varadacode)
+[<img src="https://avatars.githubusercontent.com/u/67865621?s=64&v=4" width="64" height="64" alt="haydenbanz">](https://github.com/haydenbanz)  
+[<img src="https://avatars.githubusercontent.com/u/116929670?s=64&v=4" width="64" height="64" alt="AldrinCode">](https://github.com/AldrinCode)  
+[<img src="https://avatars.githubusercontent.com/u/108749445?s=64&v=4" width="64" height="64" alt="0x_varadacode">](https://github.com/0x_varadacode)  
 [<img src="https://avatars.githubusercontent.com/u/144106684?s=64&v=4" width="64" height="64" alt="Glitchesminds">](https://github.com/Glitchesminds)
 
 ## ☕ Support
@@ -350,4 +330,4 @@ If you find this project helpful, consider buying us a coffee:
 
 ## 🚫 Disclaimer
 
-The creators of this project are not responsible for any unauthorized or misuse of the software. DiscordGloom is intended for enhancing Discord servers in a responsible and ethical manner.
+The creators of this project are not responsible
