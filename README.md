@@ -135,7 +135,7 @@ Please ensure all usage complies with applicable laws and regulations.
 
 ### Download EXE and Environment
 
-[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/releases)
+[![GitHub Download](https://img.shields.io/static/v1?label=Download&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/releases/tag/HadesConnect_win)
 
 <BR>
 
