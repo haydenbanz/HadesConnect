@@ -1,6 +1,6 @@
 # HadesConnect 🌑 V 2.1
 
-![HadesConnect Logo](https://github.com/haydenbanz/HadesConnect/blob/main/HadesConnect.png?raw=true)
+![HadesConnect Logo](https://github.com/haydenbanz/haydenbanz.github.io/blob/main/images/%20gitimage/hades23vfsd.png?raw=true)
 
 [![Python - HadesConnect](https://img.shields.io/static/v1?label=Python&message=HadesConnect&color=%242A3E87&labelColor=%236A7DA8&style=for-the-badge&&logo=python)](https://github.com/haydenbanz/HadesConnect/tree/main)
 [![MIT License](https://img.shields.io/static/v1?label=License&message=MIT&color=%233DA639&labelColor=%23e3e3e3&style=for-the-badge)](https://github.com/haydenbanz/HadesConnect/blob/main/LICENSE)
