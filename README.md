@@ -57,7 +57,7 @@ HadesConnect is a software solution designed to enable emergency switch activati
 - 📡 **/rat_down:** Initiates a remote access tool download.
 - 🔄 **/sys_restart:** Restarts the system.
 - 🗑️ **/clear:** Clears the current operation.
-- ### Voice Commands
+- ### 🎤 Voice Commands
 - Use `!join` to make the bot join your current voice channel.
 - Use `!voice_start` to start streaming audio from your microphone to the voice channel.
 - Use `!voice_stop` to stop streaming.
