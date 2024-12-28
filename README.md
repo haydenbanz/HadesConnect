@@ -1,4 +1,4 @@
-# HadesConnect 🌑 V 2.1
+# HadesConnect 🌑 V 3.1
 
 
 ![HadesConnect Logo](https://github.com/haydenbanz/haydenbanz.github.io/blob/main/images/%20gitimage/hades23vfsd.png?raw=true)
@@ -30,7 +30,8 @@ HadesConnect is a software solution designed to enable emergency switch activati
 
 - 🐛 Fixed bugs:
   - Fixed issue with Spotify remote device control not starting on device boot.
-  - Fixed issues with voice recording and streaming voice to Discord channel.
+  - Fixed issues with voice recording and voicerec is been to Discord channel.
+  - Fixed webserver issues. Also added Web socket.
 - 🚀 Added new features:
   - 🔥 Deactivate antivirus firewall.
   - 🖼️ Fixed screenshot and screen share.
