@@ -1,4 +1,5 @@
-# HadesConnect 🌑 V 3.1
+ # HadesConnect 🌑 V 3.7
+ 
 
 
 ![HadesConnect Logo](https://github.com/haydenbanz/haydenbanz.github.io/blob/main/images/%20gitimage/hades23vfsd.png?raw=true)
